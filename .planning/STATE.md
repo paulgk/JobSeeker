@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 02-05 executed (Phase 2 Wave 3 — RewriteDiff component complete)
+**Session:** Plan 02-06 executed (Phase 2 Wave 4 — AnalysisPanel + page wiring complete — Phase 2 DONE)
 
 ---
 
@@ -20,13 +20,13 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 2 — Match Analysis and Optimisation |
-| Current Plan | 02-05 complete |
-| Phase Status | In Progress (Wave 3 in progress) |
-| Overall Progress | 1/3 phases complete + 5/6 plans in Phase 2 |
+| Current Plan | 02-06 complete |
+| Phase Status | Complete |
+| Overall Progress | 2/3 phases complete |
 
 ```
 Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ████] [01-04 ████]
-Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ████] [02-05 ████] [02-06 ░░░░]
+Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ████] [02-05 ████] [02-06 ████]
 Phase 3:       [  todo  ]
 ```
 
@@ -37,7 +37,7 @@ Phase 3:       [  todo  ]
 | Phase | Goal | Status |
 |-------|------|--------|
 | 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | Complete |
-| 2 — Match Analysis and Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | Not Started |
+| 2 — Match Analysis and Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | Complete |
 | 3 — Interview Preparation | Users receive role-specific interview questions and prep strategy | Not Started |
 
 ---
@@ -46,9 +46,9 @@ Phase 3:       [  todo  ]
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 1/3 |
-| Requirements implemented | 2/10 (JDIN-01, JDIN-02) |
-| Plans executed | 9 |
+| Phases completed | 2/3 |
+| Requirements implemented | 6/10 (JDIN-01, JDIN-02, MATCH-01, MATCH-02, OPT-01, OPT-02) |
+| Plans executed | 10 |
 
 ---
 
@@ -77,6 +77,8 @@ Phase 3:       [  todo  ]
 | diff.tsx extension | Use .tsx not .ts for InlineDiff component — JSX requires .tsx; import path @/lib/diff unchanged | 2026-05-22 |
 | SSE consumer JSON.parse | Wrap per-line JSON.parse in try/catch — malformed/partial lines silently skipped | 2026-05-22 |
 | RewriteDiff undo pattern | Non-pending footer swaps callbacks: accepted renders "Undo Accept" calling onReject, rejected renders "Undo Reject" calling onAccept — no extra onUndo prop needed | 2026-05-22 |
+| page.tsx client conversion | Converted page.tsx to 'use client' (simplest path) rather than a thin wrapper — acceptable since Phase 2 interactivity requires shared state | 2026-05-22 |
+| Progress indeterminate | base-ui ProgressPrimitive.Root value={null} = indeterminate mode per its type definition | 2026-05-22 |
 
 ### Open Questions (from research)
 
@@ -110,6 +112,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 02-06 complete. Phase 2 complete. AnalysisPanel wires useAnalysis into idle/streaming/done/error UI; page.tsx feeds panel onReady callbacks into shared state. Full end-to-end flow works. Build clean.
 - 2026-05-22: Plan 02-05 complete. RewriteDiff controlled component: per-section diff card with Accept/Reject buttons, accepted/rejected badges, and undo support via callback swap.
 - 2026-05-22: Plan 02-04 complete. Display components: ScoreCard (overall score + component breakdown with progress bars), ActionList (ranked items + impact badges), KeywordBadges (keyword gap badges with empty state).
 - 2026-05-22: Plan 02-03 complete. Client data layer: InlineDiff component (src/lib/diff.tsx) using diffWords, useAnalysis hook (src/hooks/use-analysis.ts) with useReducer SSE consumer and per-rewrite accept/reject state.
@@ -126,11 +129,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T07:12:36Z
-**Stopped at:** Completed 02-05-PLAN.md (RewriteDiff component) — Phase 2 Wave 3 in progress
+**Last session:** 2026-05-22T07:17:05Z
+**Stopped at:** Completed 02-06-PLAN.md (AnalysisPanel + page wiring) — Phase 2 complete
 **Resume file:** None
 
-**Next action:** Plan 02-06 (AnalysisPanel integration — wire useAnalysis hook, ScoreCard, ActionList, KeywordBadges, and RewriteDiff into the full analysis panel). ANTHROPIC_API_KEY must be set before the route (02-02) executes.
+**Next action:** Phase 3 — Interview Preparation. Phase 2 fully complete. ANTHROPIC_API_KEY must be set in .env.local before /api/analyse executes.
 
 ---
 
