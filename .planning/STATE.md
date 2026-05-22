@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 02-04 executed (Phase 2 Wave 2 — display components complete)
+**Session:** Plan 02-05 executed (Phase 2 Wave 3 — RewriteDiff component complete)
 
 ---
 
@@ -20,13 +20,13 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 2 — Match Analysis and Optimisation |
-| Current Plan | 02-04 complete |
-| Phase Status | In Progress (Wave 2 in progress) |
-| Overall Progress | 1/3 phases complete + 4/6 plans in Phase 2 |
+| Current Plan | 02-05 complete |
+| Phase Status | In Progress (Wave 3 in progress) |
+| Overall Progress | 1/3 phases complete + 5/6 plans in Phase 2 |
 
 ```
 Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ████] [01-04 ████]
-Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ████] [02-05 ░░░░] [02-06 ░░░░]
+Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ████] [02-05 ████] [02-06 ░░░░]
 Phase 3:       [  todo  ]
 ```
 
@@ -48,7 +48,7 @@ Phase 3:       [  todo  ]
 |--------|-------|
 | Phases completed | 1/3 |
 | Requirements implemented | 2/10 (JDIN-01, JDIN-02) |
-| Plans executed | 8 |
+| Plans executed | 9 |
 
 ---
 
@@ -76,6 +76,7 @@ Phase 3:       [  todo  ]
 | zodOutputFormat single arg | SDK helpers/zod zodOutputFormat takes one argument only — plan's second 'name' arg does not exist in API | 2026-05-22 |
 | diff.tsx extension | Use .tsx not .ts for InlineDiff component — JSX requires .tsx; import path @/lib/diff unchanged | 2026-05-22 |
 | SSE consumer JSON.parse | Wrap per-line JSON.parse in try/catch — malformed/partial lines silently skipped | 2026-05-22 |
+| RewriteDiff undo pattern | Non-pending footer swaps callbacks: accepted renders "Undo Accept" calling onReject, rejected renders "Undo Reject" calling onAccept — no extra onUndo prop needed | 2026-05-22 |
 
 ### Open Questions (from research)
 
@@ -109,6 +110,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 02-05 complete. RewriteDiff controlled component: per-section diff card with Accept/Reject buttons, accepted/rejected badges, and undo support via callback swap.
 - 2026-05-22: Plan 02-04 complete. Display components: ScoreCard (overall score + component breakdown with progress bars), ActionList (ranked items + impact badges), KeywordBadges (keyword gap badges with empty state).
 - 2026-05-22: Plan 02-03 complete. Client data layer: InlineDiff component (src/lib/diff.tsx) using diffWords, useAnalysis hook (src/hooks/use-analysis.ts) with useReducer SSE consumer and per-rewrite accept/reject state.
 - 2026-05-22: Plan 02-02 complete. Real Anthropic streaming route: client.messages.stream() with zodOutputFormat, callWithRetry (retry once at 6144 tokens), all errors as SSE error events, maxDuration=60 export.
@@ -124,11 +126,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T07:09:45Z
-**Stopped at:** Completed 02-04-PLAN.md (ScoreCard, ActionList, KeywordBadges) — Phase 2 Wave 2 display components done
+**Last session:** 2026-05-22T07:12:36Z
+**Stopped at:** Completed 02-05-PLAN.md (RewriteDiff component) — Phase 2 Wave 3 in progress
 **Resume file:** None
 
-**Next action:** Phase 2 Wave 2 remaining: plan 02-05 (rewrite display) and 02-06 (analysis panel integration). ANTHROPIC_API_KEY must be set before the route (02-02) executes.
+**Next action:** Plan 02-06 (AnalysisPanel integration — wire useAnalysis hook, ScoreCard, ActionList, KeywordBadges, and RewriteDiff into the full analysis panel). ANTHROPIC_API_KEY must be set before the route (02-02) executes.
 
 ---
 
