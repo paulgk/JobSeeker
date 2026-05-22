@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ResumePanel } from '@/components/resume-panel'
 
 export default function HomePage() {
   return (
@@ -11,14 +12,9 @@ export default function HomePage() {
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[calc(100vh-8rem)]">
-        {/* Resume Panel — implemented in Plan 02 */}
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle>Resume</CardTitle>
-          </CardHeader>
-          <CardContent className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
-            Resume input coming soon
-          </CardContent>
+        <Card className="flex flex-col p-6">
+          <h2 className="text-lg font-semibold mb-4">Resume</h2>
+          <ResumePanel />
         </Card>
 
         {/* Job Description Panel — implemented in Plan 03 */}
