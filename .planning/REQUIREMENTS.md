@@ -17,13 +17,13 @@
 
 ### Match Analysis
 
-- [ ] **MATCH-01**: App produces a match score (0–100%) based on a consistent rubric comparing resume to JD
-- [ ] **MATCH-02**: App produces a prioritised action item list ranked by impact on the match score
+- [x] **MATCH-01**: App produces a match score (0–100%) based on a consistent rubric comparing resume to JD
+- [x] **MATCH-02**: App produces a prioritised action item list ranked by impact on the match score
 
 ### Resume Optimisation
 
-- [ ] **OPT-01**: App generates a keyword suggestion list — words/phrases from the JD missing in the resume — that the user can apply themselves
-- [ ] **OPT-02**: App rewrites one or more resume sections (e.g. summary, experience) to better match the JD, with user review before accepting
+- [x] **OPT-01**: App generates a keyword suggestion list — words/phrases from the JD missing in the resume — that the user can apply themselves
+- [x] **OPT-02**: App rewrites one or more resume sections (e.g. summary, experience) to better match the JD, with user review before accepting
 
 ### Interview Prep
 
