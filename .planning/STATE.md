@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 01-01 executed
+**Session:** Plan 01-02 executed
 
 ---
 
@@ -20,12 +20,12 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 1 — Input Pipeline |
-| Current Plan | 01-01 complete, 01-02/03/04 ready to run in parallel |
+| Current Plan | 01-02 complete, 01-03/04 ready to run |
 | Phase Status | In Progress |
-| Overall Progress | 0/3 phases complete (1/4 plans in Phase 1 done) |
+| Overall Progress | 0/3 phases complete (2/4 plans in Phase 1 done) |
 
 ```
-Phase 1 Plans: [01-01 ████] [01-02 ░░░░] [01-03 ░░░░] [01-04 ░░░░]
+Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ░░░░] [01-04 ░░░░]
 Phase 2:       [  todo  ]
 Phase 3:       [  todo  ]
 ```
@@ -65,6 +65,8 @@ Phase 3:       [  todo  ]
 | Score rubric | Required skills 40%, experience level 25%, domain match 20%, education 15% | 2026-05-21 |
 | Session approach | UUID cookie (24hr TTL) for rate limiting identity and future account migration | 2026-05-22 |
 | shadcn/ui preset | Radix/Nova (default non-interactive init — acceptable, consistent style) | 2026-05-22 |
+| PDF error shape | {error, code} with 400/413/422; 200-char gate returns 422 PARSE_FAILED (not 400) | 2026-05-22 |
+| Client boundary | page.tsx stays server component; ResumePanel carries 'use client' as the client boundary | 2026-05-22 |
 
 ### Open Questions (from research)
 
@@ -92,6 +94,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 01-02 complete. Resume panel live: PDF upload via /api/parse-resume, paste fallback, TextPreview component.
 - 2026-05-22: Plan 01-01 complete. Next.js 16 scaffold live with shadcn/ui, all Phase 1 deps installed.
 - 2026-05-22: Roadmap created. 3 phases, 10/10 v1 requirements mapped.
 - 2026-05-21: Requirements defined (10 v1, 8 v2). Research completed.
@@ -100,11 +103,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T05:08:15Z
-**Stopped at:** Completed 01-01-PLAN.md (scaffold)
+**Last session:** 2026-05-22T05:15:28Z
+**Stopped at:** Completed 01-02-PLAN.md (Resume Panel)
 **Resume file:** None
 
-**Next action:** Plans 01-02 (Resume Panel), 01-03 (JD Panel), and 01-04 (Rate Limiting + Session) are ready to run in parallel. Run each with `/gsd:execute-phase` targeting their respective PLAN.md files. Note: 01-02 must complete before 01-03 modifies page.tsx.
+**Next action:** Plans 01-03 (JD Panel) and 01-04 (Rate Limiting + Session) are ready to run. 01-02 is complete so 01-03 can now safely modify page.tsx.
 
 ---
 
