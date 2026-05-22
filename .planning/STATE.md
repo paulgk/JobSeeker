@@ -72,6 +72,7 @@ Phase 3:       [  todo  ]
 | Upstash dynamic import | @upstash/ratelimit and @upstash/redis imported dynamically inside checkUpstash() to avoid Edge errors when env vars absent | 2026-05-22 |
 | AnalysisResult schema shape | Flat (<=3 nesting levels, no optional arrays), exactly 5 top-level fields: overallScore, components[], actionItems[], keywordGaps[], rewrites[] | 2026-05-22 |
 | SYSTEM_PROMPT rubric encoding | Percentage values hardcoded as strings to prevent model renegotiation of scoring weights | 2026-05-22 |
+| zodOutputFormat single arg | SDK helpers/zod zodOutputFormat takes one argument only — plan's second 'name' arg does not exist in API | 2026-05-22 |
 | diff.tsx extension | Use .tsx not .ts for InlineDiff component — JSX requires .tsx; import path @/lib/diff unchanged | 2026-05-22 |
 | SSE consumer JSON.parse | Wrap per-line JSON.parse in try/catch — malformed/partial lines silently skipped | 2026-05-22 |
 
@@ -108,6 +109,7 @@ None currently.
 ### Recent Activity
 
 - 2026-05-22: Plan 02-03 complete. Client data layer: InlineDiff component (src/lib/diff.tsx) using diffWords, useAnalysis hook (src/hooks/use-analysis.ts) with useReducer SSE consumer and per-rewrite accept/reject state.
+- 2026-05-22: Plan 02-02 complete. Real Anthropic streaming route: client.messages.stream() with zodOutputFormat, callWithRetry (retry once at 6144 tokens), all errors as SSE error events, maxDuration=60 export.
 - 2026-05-22: Plan 02-01 complete. Phase 2 Wave 1 foundation: @anthropic-ai/sdk + diff installed, AnalysisResultSchema + result SSE event, SYSTEM_PROMPT with locked rubric, buildUserPrompt(), progress/separator/scroll-area shadcn components.
 - 2026-05-22: Plan 01-03 complete. JD panel live: URL fetch via /api/fetch-jd (cheerio, 8-domain blocklist, 10s timeout), paste fallback with TextPreview. Phase 1 complete.
 - 2026-05-22: Plan 01-04 complete. SSE mock endpoint, Zod schemas, rate limiting middleware (20 req/min/IP), and wrapUserContent() sanitize helper all in place.
