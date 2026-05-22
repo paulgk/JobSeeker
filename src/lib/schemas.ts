@@ -33,10 +33,42 @@ export const AnalyseRequestSchema = z.object({
 })
 export type AnalyseRequest = z.infer<typeof AnalyseRequestSchema>
 
+// ── Analysis result shape (Phase 2 LLM response) ─────────────────────────────
+
+const ScoreComponentSchema = z.object({
+  name: z.string(),
+  weight: z.number(),
+  score: z.number(),
+  rationale: z.string(),
+})
+
+const ActionItemSchema = z.object({
+  rank: z.number(),
+  title: z.string(),
+  detail: z.string(),
+  estimatedImpact: z.enum(['high', 'medium', 'low']),
+})
+
+const RewriteSectionSchema = z.object({
+  sectionName: z.string(),
+  originalText: z.string(),
+  rewrittenText: z.string(),
+})
+
+export const AnalysisResultSchema = z.object({
+  overallScore: z.number(),
+  components: z.array(ScoreComponentSchema),
+  actionItems: z.array(ActionItemSchema),
+  keywordGaps: z.array(z.string()),
+  rewrites: z.array(RewriteSectionSchema),
+})
+export type AnalysisResult = z.infer<typeof AnalysisResultSchema>
+
 // SSE event shapes emitted by /api/analyse
 export const AnalyseResponseEventSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('start') }),
   z.object({ type: z.literal('chunk'), content: z.string() }),
+  z.object({ type: z.literal('result'), data: AnalysisResultSchema }),
   z.object({ type: z.literal('error'), message: z.string() }),
   z.object({ type: z.literal('done') }),
 ])
