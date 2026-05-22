@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 01-04 executed
+**Session:** Plan 01-03 executed (Phase 1 complete)
 
 ---
 
@@ -20,12 +20,12 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 1 — Input Pipeline |
-| Current Plan | 01-04 complete, 01-03 ready to run |
-| Phase Status | In Progress |
-| Overall Progress | 0/3 phases complete (3/4 plans in Phase 1 done) |
+| Current Plan | 01-03 complete (Phase 1 COMPLETE) |
+| Phase Status | Phase 1 Complete |
+| Overall Progress | 1/3 phases complete (4/4 plans in Phase 1 done) |
 
 ```
-Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ░░░░] [01-04 ████]
+Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ████] [01-04 ████]
 Phase 2:       [  todo  ]
 Phase 3:       [  todo  ]
 ```
@@ -36,7 +36,7 @@ Phase 3:       [  todo  ]
 
 | Phase | Goal | Status |
 |-------|------|--------|
-| 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | In Progress |
+| 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | Complete |
 | 2 — Match Analysis and Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | Not Started |
 | 3 — Interview Preparation | Users receive role-specific interview questions and prep strategy | Not Started |
 
@@ -46,9 +46,9 @@ Phase 3:       [  todo  ]
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 0/3 |
-| Requirements implemented | 0/10 |
-| Plans executed | 1 |
+| Phases completed | 1/3 |
+| Requirements implemented | 2/10 (JDIN-01, JDIN-02) |
+| Plans executed | 4 |
 
 ---
 
@@ -97,6 +97,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 01-03 complete. JD panel live: URL fetch via /api/fetch-jd (cheerio, 8-domain blocklist, 10s timeout), paste fallback with TextPreview. Phase 1 complete.
 - 2026-05-22: Plan 01-04 complete. SSE mock endpoint, Zod schemas, rate limiting middleware (20 req/min/IP), and wrapUserContent() sanitize helper all in place.
 - 2026-05-22: Plan 01-02 complete. Resume panel live: PDF upload via /api/parse-resume, paste fallback, TextPreview component.
 - 2026-05-22: Plan 01-01 complete. Next.js 16 scaffold live with shadcn/ui, all Phase 1 deps installed.
@@ -107,11 +108,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T05:18:20Z
-**Stopped at:** Completed 01-04-PLAN.md (SSE endpoint, Zod schemas, rate limiting, sanitize)
+**Last session:** 2026-05-22T05:21:41Z
+**Stopped at:** Completed 01-03-PLAN.md (JD panel, URL scraper, fetch-jd route) — Phase 1 complete
 **Resume file:** None
 
-**Next action:** Plan 01-03 (JD Panel) is the only remaining Phase 1 plan. 01-02 is complete so 01-03 can safely modify page.tsx.
+**Next action:** Phase 2 — Match Analysis and Optimisation. Both input panels are live and provide `onReady` callbacks for wiring into shared state.
 
 ---
 
