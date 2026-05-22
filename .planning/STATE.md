@@ -91,6 +91,12 @@ Phase 3:       [  todo  ]
 - Middleware runs in Edge Runtime — do not import Node.js-only modules (net, ioredis) in middleware.ts
 - Wave 2 plans 01-02 and 01-03 both modify page.tsx — 01-02 must finish before 01-03 begins
 
+### Pending Todos
+
+| Todo | Area | Created |
+|------|------|---------|
+| Review and polish UX with expert eye | ui | 2026-05-22 |
+
 ### Blockers
 
 None currently.
