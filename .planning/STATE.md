@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 01-02 executed
+**Session:** Plan 01-04 executed
 
 ---
 
@@ -20,12 +20,12 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 1 — Input Pipeline |
-| Current Plan | 01-02 complete, 01-03/04 ready to run |
+| Current Plan | 01-04 complete, 01-03 ready to run |
 | Phase Status | In Progress |
-| Overall Progress | 0/3 phases complete (2/4 plans in Phase 1 done) |
+| Overall Progress | 0/3 phases complete (3/4 plans in Phase 1 done) |
 
 ```
-Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ░░░░] [01-04 ░░░░]
+Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ░░░░] [01-04 ████]
 Phase 2:       [  todo  ]
 Phase 3:       [  todo  ]
 ```
@@ -67,6 +67,9 @@ Phase 3:       [  todo  ]
 | shadcn/ui preset | Radix/Nova (default non-interactive init — acceptable, consistent style) | 2026-05-22 |
 | PDF error shape | {error, code} with 400/413/422; 200-char gate returns 422 PARSE_FAILED (not 400) | 2026-05-22 |
 | Client boundary | page.tsx stays server component; ResumePanel carries 'use client' as the client boundary | 2026-05-22 |
+| Zod v4 error API | Use .issues not .errors on ZodError — .errors doesn't exist in Zod v4 | 2026-05-22 |
+| analyse route runtime | runtime = nodejs (not edge) for 60s SSE timeout headroom for Phase 2 LLM calls | 2026-05-22 |
+| Upstash dynamic import | @upstash/ratelimit and @upstash/redis imported dynamically inside checkUpstash() to avoid Edge errors when env vars absent | 2026-05-22 |
 
 ### Open Questions (from research)
 
@@ -94,6 +97,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 01-04 complete. SSE mock endpoint, Zod schemas, rate limiting middleware (20 req/min/IP), and wrapUserContent() sanitize helper all in place.
 - 2026-05-22: Plan 01-02 complete. Resume panel live: PDF upload via /api/parse-resume, paste fallback, TextPreview component.
 - 2026-05-22: Plan 01-01 complete. Next.js 16 scaffold live with shadcn/ui, all Phase 1 deps installed.
 - 2026-05-22: Roadmap created. 3 phases, 10/10 v1 requirements mapped.
@@ -103,11 +107,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T05:15:28Z
-**Stopped at:** Completed 01-02-PLAN.md (Resume Panel)
+**Last session:** 2026-05-22T05:18:20Z
+**Stopped at:** Completed 01-04-PLAN.md (SSE endpoint, Zod schemas, rate limiting, sanitize)
 **Resume file:** None
 
-**Next action:** Plans 01-03 (JD Panel) and 01-04 (Rate Limiting + Session) are ready to run. 01-02 is complete so 01-03 can now safely modify page.tsx.
+**Next action:** Plan 01-03 (JD Panel) is the only remaining Phase 1 plan. 01-02 is complete so 01-03 can safely modify page.tsx.
 
 ---
 
