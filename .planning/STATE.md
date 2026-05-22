@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 02-01 executed (Phase 2 Wave 1 foundation complete)
+**Session:** Plan 02-03 executed (Phase 2 Wave 2 — client data layer complete)
 
 ---
 
@@ -20,13 +20,13 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 2 — Match Analysis and Optimisation |
-| Current Plan | 02-01 complete |
-| Phase Status | In Progress (Wave 1 complete) |
-| Overall Progress | 1/3 phases complete + 1/6 plans in Phase 2 |
+| Current Plan | 02-03 complete |
+| Phase Status | In Progress (Wave 2 in progress) |
+| Overall Progress | 1/3 phases complete + 3/6 plans in Phase 2 |
 
 ```
 Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ████] [01-04 ████]
-Phase 2 Plans: [02-01 ████] [02-02 ░░░░] [02-03 ░░░░] [02-04 ░░░░] [02-05 ░░░░] [02-06 ░░░░]
+Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ░░░░] [02-05 ░░░░] [02-06 ░░░░]
 Phase 3:       [  todo  ]
 ```
 
@@ -48,7 +48,7 @@ Phase 3:       [  todo  ]
 |--------|-------|
 | Phases completed | 1/3 |
 | Requirements implemented | 2/10 (JDIN-01, JDIN-02) |
-| Plans executed | 5 |
+| Plans executed | 7 |
 
 ---
 
@@ -72,6 +72,8 @@ Phase 3:       [  todo  ]
 | Upstash dynamic import | @upstash/ratelimit and @upstash/redis imported dynamically inside checkUpstash() to avoid Edge errors when env vars absent | 2026-05-22 |
 | AnalysisResult schema shape | Flat (<=3 nesting levels, no optional arrays), exactly 5 top-level fields: overallScore, components[], actionItems[], keywordGaps[], rewrites[] | 2026-05-22 |
 | SYSTEM_PROMPT rubric encoding | Percentage values hardcoded as strings to prevent model renegotiation of scoring weights | 2026-05-22 |
+| diff.tsx extension | Use .tsx not .ts for InlineDiff component — JSX requires .tsx; import path @/lib/diff unchanged | 2026-05-22 |
+| SSE consumer JSON.parse | Wrap per-line JSON.parse in try/catch — malformed/partial lines silently skipped | 2026-05-22 |
 
 ### Open Questions (from research)
 
@@ -105,6 +107,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 02-03 complete. Client data layer: InlineDiff component (src/lib/diff.tsx) using diffWords, useAnalysis hook (src/hooks/use-analysis.ts) with useReducer SSE consumer and per-rewrite accept/reject state.
 - 2026-05-22: Plan 02-01 complete. Phase 2 Wave 1 foundation: @anthropic-ai/sdk + diff installed, AnalysisResultSchema + result SSE event, SYSTEM_PROMPT with locked rubric, buildUserPrompt(), progress/separator/scroll-area shadcn components.
 - 2026-05-22: Plan 01-03 complete. JD panel live: URL fetch via /api/fetch-jd (cheerio, 8-domain blocklist, 10s timeout), paste fallback with TextPreview. Phase 1 complete.
 - 2026-05-22: Plan 01-04 complete. SSE mock endpoint, Zod schemas, rate limiting middleware (20 req/min/IP), and wrapUserContent() sanitize helper all in place.
@@ -117,11 +120,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T07:31:00Z
-**Stopped at:** Completed 02-01-PLAN.md (foundation deps, schema, prompt) — Phase 2 Wave 1 complete
+**Last session:** 2026-05-22T07:09:08Z
+**Stopped at:** Completed 02-03-PLAN.md (InlineDiff + useAnalysis hook) — Phase 2 Wave 2 client primitives done
 **Resume file:** None
 
-**Next action:** Phase 2 Wave 2 — plans 02-02 (analyse route), 02-03 (hook), 02-04 (components) can now begin. ANTHROPIC_API_KEY must be set before the route executes.
+**Next action:** Phase 2 Wave 2 — plan 02-04 (UI components: ScoreCard, KeywordGaps, ActionItems) can proceed. ANTHROPIC_API_KEY must be set before the route (02-02) executes.
 
 ---
 
