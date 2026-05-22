@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 02-03 executed (Phase 2 Wave 2 — client data layer complete)
+**Session:** Plan 02-04 executed (Phase 2 Wave 2 — display components complete)
 
 ---
 
@@ -20,13 +20,13 @@
 | Field | Value |
 |-------|-------|
 | Current Phase | 2 — Match Analysis and Optimisation |
-| Current Plan | 02-03 complete |
+| Current Plan | 02-04 complete |
 | Phase Status | In Progress (Wave 2 in progress) |
-| Overall Progress | 1/3 phases complete + 3/6 plans in Phase 2 |
+| Overall Progress | 1/3 phases complete + 4/6 plans in Phase 2 |
 
 ```
 Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ████] [01-04 ████]
-Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ░░░░] [02-05 ░░░░] [02-06 ░░░░]
+Phase 2 Plans: [02-01 ████] [02-02 ████] [02-03 ████] [02-04 ████] [02-05 ░░░░] [02-06 ░░░░]
 Phase 3:       [  todo  ]
 ```
 
@@ -48,7 +48,7 @@ Phase 3:       [  todo  ]
 |--------|-------|
 | Phases completed | 1/3 |
 | Requirements implemented | 2/10 (JDIN-01, JDIN-02) |
-| Plans executed | 7 |
+| Plans executed | 8 |
 
 ---
 
@@ -58,6 +58,7 @@ Phase 3:       [  todo  ]
 
 | Decision | Outcome | Date |
 |----------|---------|------|
+| Progress bar dynamic width | Use inline style (style={{ width: score% }}) not dynamic Tailwind class — purged at build time | 2026-05-22 |
 | Stack | Next.js 16 App Router + TypeScript + Tailwind v4 + Anthropic SDK direct | 2026-05-21 |
 | PDF parsing library | unpdf (wraps pdfjs-dist, avoids Next.js build failures) | 2026-05-21 |
 | LLM call mechanism | Route Handlers with streaming (not Server Actions — 1 MB limit, no streaming) | 2026-05-21 |
@@ -108,6 +109,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 02-04 complete. Display components: ScoreCard (overall score + component breakdown with progress bars), ActionList (ranked items + impact badges), KeywordBadges (keyword gap badges with empty state).
 - 2026-05-22: Plan 02-03 complete. Client data layer: InlineDiff component (src/lib/diff.tsx) using diffWords, useAnalysis hook (src/hooks/use-analysis.ts) with useReducer SSE consumer and per-rewrite accept/reject state.
 - 2026-05-22: Plan 02-02 complete. Real Anthropic streaming route: client.messages.stream() with zodOutputFormat, callWithRetry (retry once at 6144 tokens), all errors as SSE error events, maxDuration=60 export.
 - 2026-05-22: Plan 02-01 complete. Phase 2 Wave 1 foundation: @anthropic-ai/sdk + diff installed, AnalysisResultSchema + result SSE event, SYSTEM_PROMPT with locked rubric, buildUserPrompt(), progress/separator/scroll-area shadcn components.
@@ -122,11 +124,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T07:09:08Z
-**Stopped at:** Completed 02-03-PLAN.md (InlineDiff + useAnalysis hook) — Phase 2 Wave 2 client primitives done
+**Last session:** 2026-05-22T07:09:45Z
+**Stopped at:** Completed 02-04-PLAN.md (ScoreCard, ActionList, KeywordBadges) — Phase 2 Wave 2 display components done
 **Resume file:** None
 
-**Next action:** Phase 2 Wave 2 — plan 02-04 (UI components: ScoreCard, KeywordGaps, ActionItems) can proceed. ANTHROPIC_API_KEY must be set before the route (02-02) executes.
+**Next action:** Phase 2 Wave 2 remaining: plan 02-05 (rewrite display) and 02-06 (analysis panel integration). ANTHROPIC_API_KEY must be set before the route (02-02) executes.
 
 ---
 
