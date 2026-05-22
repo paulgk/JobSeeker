@@ -67,6 +67,16 @@ Plans:
 - Zod schema validation on every LLM response; retry once with corrective prompt on schema failure
 - Verify current Claude model IDs before writing any prompts (`npx @anthropic-ai/sdk list-models`); use dated model IDs, not aliases
 
+**Plans:** 6 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Foundation: install SDK/diff/shadcn, extend schemas (AnalysisResultSchema + result event), analysis-prompt.ts (MATCH-01, MATCH-02, OPT-01, OPT-02)
+- [ ] 02-02-PLAN.md — Analyse route: replace mock with real Anthropic streaming + structured output + retry-once (MATCH-01, MATCH-02, OPT-01, OPT-02)
+- [ ] 02-03-PLAN.md — Client data layer: InlineDiff utility + useAnalysis SSE hook with accept/reject reducer (OPT-02)
+- [ ] 02-04-PLAN.md — Display components: ScoreCard, ActionList, KeywordBadges (MATCH-01, MATCH-02, OPT-01)
+- [ ] 02-05-PLAN.md — Rewrite diff: before/after diff with per-section accept/reject (OPT-02)
+- [ ] 02-06-PLAN.md — Integration: AnalysisPanel + page.tsx wiring, end-to-end streamed flow (MATCH-01, MATCH-02, OPT-01, OPT-02)
+
 ---
 
 ### Phase 3 — Interview Preparation
@@ -93,7 +103,7 @@ Plans:
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
 | 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | RESIN-01, RESIN-02, JDIN-01, JDIN-02 | Complete |
-| 2 — Match Analysis and Resume Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | MATCH-01, MATCH-02, OPT-01, OPT-02 | Not Started |
+| 2 — Match Analysis and Resume Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | MATCH-01, MATCH-02, OPT-01, OPT-02 | Planned |
 | 3 — Interview Preparation | Users receive role-specific interview questions and prep strategy | INTV-01, INTV-02 | Not Started |
 
 ---
