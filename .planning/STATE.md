@@ -1,7 +1,7 @@
 # State: JobSeeker
 
 **Last Updated:** 2026-05-22
-**Session:** Plan 01-03 executed (Phase 1 complete)
+**Session:** Plan 02-01 executed (Phase 2 Wave 1 foundation complete)
 
 ---
 
@@ -11,7 +11,7 @@
 
 **Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. Stateless v1 — no auth, no DB. Deploy to Vercel.
 
-**Current Focus:** Phase 1 — Input Pipeline
+**Current Focus:** Phase 2 — Match Analysis and Optimisation
 
 ---
 
@@ -19,14 +19,14 @@
 
 | Field | Value |
 |-------|-------|
-| Current Phase | 1 — Input Pipeline |
-| Current Plan | 01-03 complete (Phase 1 COMPLETE) |
-| Phase Status | Phase 1 Complete |
-| Overall Progress | 1/3 phases complete (4/4 plans in Phase 1 done) |
+| Current Phase | 2 — Match Analysis and Optimisation |
+| Current Plan | 02-01 complete |
+| Phase Status | In Progress (Wave 1 complete) |
+| Overall Progress | 1/3 phases complete + 1/6 plans in Phase 2 |
 
 ```
 Phase 1 Plans: [01-01 ████] [01-02 ████] [01-03 ████] [01-04 ████]
-Phase 2:       [  todo  ]
+Phase 2 Plans: [02-01 ████] [02-02 ░░░░] [02-03 ░░░░] [02-04 ░░░░] [02-05 ░░░░] [02-06 ░░░░]
 Phase 3:       [  todo  ]
 ```
 
@@ -48,7 +48,7 @@ Phase 3:       [  todo  ]
 |--------|-------|
 | Phases completed | 1/3 |
 | Requirements implemented | 2/10 (JDIN-01, JDIN-02) |
-| Plans executed | 4 |
+| Plans executed | 5 |
 
 ---
 
@@ -70,6 +70,8 @@ Phase 3:       [  todo  ]
 | Zod v4 error API | Use .issues not .errors on ZodError — .errors doesn't exist in Zod v4 | 2026-05-22 |
 | analyse route runtime | runtime = nodejs (not edge) for 60s SSE timeout headroom for Phase 2 LLM calls | 2026-05-22 |
 | Upstash dynamic import | @upstash/ratelimit and @upstash/redis imported dynamically inside checkUpstash() to avoid Edge errors when env vars absent | 2026-05-22 |
+| AnalysisResult schema shape | Flat (<=3 nesting levels, no optional arrays), exactly 5 top-level fields: overallScore, components[], actionItems[], keywordGaps[], rewrites[] | 2026-05-22 |
+| SYSTEM_PROMPT rubric encoding | Percentage values hardcoded as strings to prevent model renegotiation of scoring weights | 2026-05-22 |
 
 ### Open Questions (from research)
 
@@ -103,6 +105,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-22: Plan 02-01 complete. Phase 2 Wave 1 foundation: @anthropic-ai/sdk + diff installed, AnalysisResultSchema + result SSE event, SYSTEM_PROMPT with locked rubric, buildUserPrompt(), progress/separator/scroll-area shadcn components.
 - 2026-05-22: Plan 01-03 complete. JD panel live: URL fetch via /api/fetch-jd (cheerio, 8-domain blocklist, 10s timeout), paste fallback with TextPreview. Phase 1 complete.
 - 2026-05-22: Plan 01-04 complete. SSE mock endpoint, Zod schemas, rate limiting middleware (20 req/min/IP), and wrapUserContent() sanitize helper all in place.
 - 2026-05-22: Plan 01-02 complete. Resume panel live: PDF upload via /api/parse-resume, paste fallback, TextPreview component.
@@ -114,11 +117,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-22T05:21:41Z
-**Stopped at:** Completed 01-03-PLAN.md (JD panel, URL scraper, fetch-jd route) — Phase 1 complete
+**Last session:** 2026-05-22T07:31:00Z
+**Stopped at:** Completed 02-01-PLAN.md (foundation deps, schema, prompt) — Phase 2 Wave 1 complete
 **Resume file:** None
 
-**Next action:** Phase 2 — Match Analysis and Optimisation. Both input panels are live and provide `onReady` callbacks for wiring into shared state.
+**Next action:** Phase 2 Wave 2 — plans 02-02 (analyse route), 02-03 (hook), 02-04 (components) can now begin. ANTHROPIC_API_KEY must be set before the route executes.
 
 ---
 
