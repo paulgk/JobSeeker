@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "updated": 1779434187751,
+  "files": {
+    "/Volumes/Ext/GenAI/JobSeeker/next.config.ts": {
+      "exports": [
+        "default",
+        "nextConfig"
+      ],
+      "imports": [],
+      "indexed": 1779426073616
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/app/layout.tsx": {
+      "exports": [
+        "metadata",
+        "default",
+        "RootLayout"
+      ],
+      "imports": [
+        "next/font/google",
+        "./globals.css"
+      ],
+      "indexed": 1779426262784
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/app/page.tsx": {
+      "exports": [
+        "default",
+        "HomePage"
+      ],
+      "imports": [
+        "react",
+        "@/components/resume-panel",
+        "@/components/jd-panel",
+        "@/components/analysis-panel"
+      ],
+      "indexed": 1779434187751
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/pdf.ts": {
+      "exports": [
+        "extractPdfText"
+      ],
+      "imports": [
+        "unpdf"
+      ],
+      "indexed": 1779426731964
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/app/api/parse-resume/route.ts": {
+      "exports": [
+        "runtime",
+        "POST"
+      ],
+      "imports": [
+        "next/server",
+        "@/lib/pdf"
+      ],
+      "indexed": 1779426771014
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/schemas.ts": {
+      "exports": [
+        "ParseResumeResponseSchema",
+        "ParseResumeTextRequestSchema",
+        "FetchJdRequestSchema",
+        "FetchJdResponseSchema",
+        "AnalyseRequestSchema",
+        "AnalysisResultSchema",
+        "AnalyseResponseEventSchema",
+        "ApiErrorSchema",
+        "ParseResumeResponse",
+        "ParseResumeTextRequest",
+        "FetchJdRequest",
+        "FetchJdResponse",
+        "AnalyseRequest",
+        "AnalysisResult",
+        "AnalyseResponseEvent",
+        "ApiError"
+      ],
+      "imports": [
+        "zod"
+      ],
+      "indexed": 1779433369547
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/sanitize.ts": {
+      "exports": [
+        "wrapUserContent"
+      ],
+      "imports": [],
+      "indexed": 1779426839095
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/text-preview.tsx": {
+      "exports": [
+        "TextPreview"
+      ],
+      "imports": [],
+      "indexed": 1779426843953
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/ratelimit.ts": {
+      "exports": [
+        "checkRateLimit",
+        "RateLimitResult"
+      ],
+      "imports": [],
+      "indexed": 1779426860242
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/resume-panel.tsx": {
+      "exports": [
+        "ResumePanel"
+      ],
+      "imports": [
+        "react",
+        "@/components/ui/tabs",
+        "@/components/ui/textarea",
+        "@/components/ui/button",
+        "@/components/ui/alert",
+        "@/components/text-preview"
+      ],
+      "indexed": 1779426867638
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/app/api/analyse/route.ts": {
+      "exports": [
+        "dynamic",
+        "runtime",
+        "maxDuration",
+        "POST"
+      ],
+      "imports": [
+        "@anthropic-ai/sdk",
+        "@anthropic-ai/sdk/helpers/zod",
+        "next/server",
+        "@/lib/schemas",
+        "@/lib/analysis-prompt"
+      ],
+      "indexed": 1779433690772
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/middleware.ts": {
+      "exports": [
+        "middleware",
+        "config"
+      ],
+      "imports": [
+        "next/server",
+        "@/lib/ratelimit"
+      ],
+      "indexed": 1779426992975
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/scraper.ts": {
+      "exports": [
+        "fetchJdFromUrl"
+      ],
+      "imports": [
+        "cheerio"
+      ],
+      "indexed": 1779427333211
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/app/api/fetch-jd/route.ts": {
+      "exports": [
+        "runtime",
+        "POST"
+      ],
+      "imports": [
+        "next/server",
+        "zod",
+        "@/lib/scraper"
+      ],
+      "indexed": 1779427372987
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/jd-panel.tsx": {
+      "exports": [
+        "JobDescriptionPanel"
+      ],
+      "imports": [
+        "react",
+        "@/components/ui/tabs",
+        "@/components/ui/textarea",
+        "@/components/ui/button",
+        "@/components/ui/alert",
+        "@/components/text-preview"
+      ],
+      "indexed": 1779427439444
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/analysis-prompt.ts": {
+      "exports": [
+        "SYSTEM_PROMPT",
+        "buildUserPrompt"
+      ],
+      "imports": [
+        "@/lib/sanitize"
+      ],
+      "indexed": 1779433402211
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/lib/diff.tsx": {
+      "exports": [
+        "InlineDiff"
+      ],
+      "imports": [
+        "diff"
+      ],
+      "indexed": 1779433670911
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/score-card.tsx": {
+      "exports": [
+        "ScoreCard"
+      ],
+      "imports": [
+        "@/components/ui/card",
+        "@/components/ui/separator"
+      ],
+      "indexed": 1779433707841
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/hooks/use-analysis.ts": {
+      "exports": [
+        "useAnalysis",
+        "RewriteSection",
+        "RewriteState",
+        "AnalysisState"
+      ],
+      "imports": [
+        "react"
+      ],
+      "indexed": 1779433711375
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/action-list.tsx": {
+      "exports": [
+        "ActionList"
+      ],
+      "imports": [
+        "@/components/ui/card",
+        "@/components/ui/badge"
+      ],
+      "indexed": 1779433739317
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/keyword-badges.tsx": {
+      "exports": [
+        "KeywordBadges"
+      ],
+      "imports": [
+        "@/components/ui/card",
+        "@/components/ui/badge"
+      ],
+      "indexed": 1779433761530
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/rewrite-diff.tsx": {
+      "exports": [
+        "RewriteDiff"
+      ],
+      "imports": [
+        "lucide-react",
+        "@/lib/diff",
+        "@/components/ui/card",
+        "@/components/ui/badge",
+        "@/components/ui/button"
+      ],
+      "indexed": 1779433923433
+    },
+    "/Volumes/Ext/GenAI/JobSeeker/src/components/analysis-panel.tsx": {
+      "exports": [
+        "AnalysisPanel"
+      ],
+      "imports": [
+        "@/hooks/use-analysis",
+        "@/components/score-card",
+        "@/components/action-list",
+        "@/components/keyword-badges",
+        "@/components/rewrite-diff",
+        "@/components/ui/progress",
+        "@/components/ui/scroll-area",
+        "@/components/ui/separator",
+        "@/components/ui/button",
+        "@/components/ui/alert"
+      ],
+      "indexed": 1779434159244
+    }
+  }
+}
