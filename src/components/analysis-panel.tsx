@@ -1,88 +1,78 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useAnalysis } from '@/hooks/use-analysis'
 import { ScoreCard } from '@/components/score-card'
 import { ActionList } from '@/components/action-list'
 import { KeywordBadges } from '@/components/keyword-badges'
 import { RewriteDiff } from '@/components/rewrite-diff'
 import { Progress } from '@/components/ui/progress'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
 interface AnalysisPanelProps {
   resumeText: string
   jdText: string
+  onInterviewPrepReady?: () => void
 }
 
-export function AnalysisPanel({ resumeText, jdText }: AnalysisPanelProps) {
+export function AnalysisPanel({ resumeText, jdText, onInterviewPrepReady }: AnalysisPanelProps) {
   const { state, start, acceptRewrite, rejectRewrite } = useAnalysis()
 
-  const canAnalyse = resumeText.length > 0 && jdText.length > 0
-
-  if (state.phase === 'idle') {
-    return (
-      <div className="flex justify-center pt-6">
-        <Button
-          size="lg"
-          disabled={!canAnalyse}
-          onClick={() => start(resumeText, jdText)}
-        >
-          Analyse Match
-        </Button>
-      </div>
-    )
-  }
+  useEffect(() => {
+    start(resumeText, jdText)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (state.phase === 'streaming') {
     return (
-      <div className="space-y-4 pt-6">
-        <h2 className="text-lg font-semibold">Analysing&hellip;</h2>
-        <Progress value={null} />
-        <ScrollArea className="h-48 rounded-md border p-3">
-          <pre className="text-xs text-muted-foreground font-mono whitespace-pre-wrap break-words">
-            {state.progress || 'Thinking…'}
+      <div className="mt-12 space-y-4 max-w-2xl">
+        <h2 className="text-xl font-semibold tracking-tight text-foreground">Analysing your match</h2>
+        <p className="text-sm text-muted-foreground">Reading your resume and the job description</p>
+        <Progress value={null} className="h-1" />
+        <div className="mt-4 max-h-48 overflow-y-auto rounded-lg bg-secondary border border-border p-4">
+          <pre className="text-xs text-muted-foreground font-mono whitespace-pre-wrap break-words leading-relaxed">
+            {state.progress || 'Starting…'}
           </pre>
-        </ScrollArea>
+        </div>
       </div>
     )
   }
 
   if (state.phase === 'error') {
     return (
-      <div className="pt-6 space-y-4">
+      <div className="mt-12 space-y-4 max-w-2xl">
         <Alert variant="destructive">
           <AlertTitle>Analysis failed</AlertTitle>
           <AlertDescription>{state.message}</AlertDescription>
         </Alert>
-        <Button variant="outline" onClick={() => start(resumeText, jdText)} disabled={!canAnalyse}>
-          Retry
+        <Button variant="outline" onClick={() => start(resumeText, jdText)}>
+          Try again
         </Button>
       </div>
     )
   }
 
-  // phase === 'done'
+  if (state.phase !== 'done') return null
+
   const { result, rewrites } = state
 
   return (
-    <div className="space-y-6 pt-6">
+    <div className="mt-12">
       <ScoreCard overallScore={result.overallScore} components={result.components} />
 
-      <Separator />
+      <div className="mt-10">
+        <ActionList items={result.actionItems} />
+      </div>
 
-      <ActionList items={result.actionItems} />
-
-      <Separator />
-
-      <KeywordBadges keywords={result.keywordGaps} />
+      <div className="mt-10">
+        <KeywordBadges keywords={result.keywordGaps} />
+      </div>
 
       {rewrites.length > 0 && (
-        <>
-          <Separator />
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground mb-6">Suggested rewrites</h2>
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Suggested Rewrites</h2>
             {rewrites.map((rw, i) => (
               <RewriteDiff
                 key={rw.section.sectionName + i}
@@ -92,12 +82,17 @@ export function AnalysisPanel({ resumeText, jdText }: AnalysisPanelProps) {
               />
             ))}
           </div>
-        </>
+        </div>
       )}
 
-      <div className="flex justify-end pt-2">
-        <Button variant="outline" onClick={() => start(resumeText, jdText)}>
-          Re-analyse
+      <div className="mt-10 flex justify-end gap-3">
+        {onInterviewPrepReady && (
+          <Button variant="default" onClick={onInterviewPrepReady}>
+            Prepare for interview
+          </Button>
+        )}
+        <Button variant="ghost" className="text-muted-foreground" onClick={() => start(resumeText, jdText)}>
+          Run again
         </Button>
       </div>
     </div>
