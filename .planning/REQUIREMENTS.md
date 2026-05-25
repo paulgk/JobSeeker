@@ -27,8 +27,8 @@
 
 ### Interview Prep
 
-- [ ] **INTV-01**: App generates JD-specific interview questions tailored to the role's requirements (not a generic list)
-- [ ] **INTV-02**: App provides interview tips and preparation strategy tailored to this role type
+- [x] **INTV-01**: App generates JD-specific interview questions tailored to the role's requirements (not a generic list)
+- [x] **INTV-02**: App provides interview tips and preparation strategy tailored to this role type
 
 ## v2 Requirements
 
@@ -84,8 +84,8 @@
 | MATCH-02 | Phase 2 — Match Analysis and Resume Optimisation | Pending |
 | OPT-01 | Phase 2 — Match Analysis and Resume Optimisation | Pending |
 | OPT-02 | Phase 2 — Match Analysis and Resume Optimisation | Pending |
-| INTV-01 | Phase 3 — Interview Preparation | Pending |
-| INTV-02 | Phase 3 — Interview Preparation | Pending |
+| INTV-01 | Phase 3 — Interview Preparation | Complete |
+| INTV-02 | Phase 3 — Interview Preparation | Complete |
 
 **Coverage:**
 - v1 requirements: 10 total
