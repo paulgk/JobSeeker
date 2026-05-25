@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-05-25T05:22:52.800Z"
 last_activity: 2026-05-25
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -16,26 +16,26 @@ progress:
 # State: JobSeeker
 
 **Last Updated:** 2026-05-25
-**Session:** Plan 03-05 executed (Phase 3 Wave 4 — integration complete — Phase 3 DONE)
+**Session:** Roadmap created for v1.1 — Phases 4–7 defined
 
 ---
 
 ## Project Reference
 
-**Core Value:** A job seeker pastes their resume and a JD and walks away with a smarter, tailored resume and a clear action plan to land the interview.
+**Core Value:** A job seeker pastes their resume and a JD and walks away with a smarter, tailored resume and a clear action plan to land the interview — and can return weeks later to revisit their analysis and prepare for interview calls.
 
-**Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. Stateless v1 — no auth, no DB. Deploy to Vercel.
+**Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. v1.1 adds better-auth (Google OAuth), Neon Postgres via @neondatabase/serverless, and Drizzle ORM. Deploy to Vercel.
 
-**Current Focus:** Milestone complete
+**Current Focus:** v1.1 — Persistence & History
 
 ---
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Defining phases
 Plan: —
-Status: Defining requirements
-Last activity: 2026-05-25 — Milestone v1.1 started
+Status: Roadmap created
+Last activity: 2026-05-25 — v1.1 roadmap created (4 phases, 16 requirements mapped)
 
 ## Phase Summary
 
@@ -44,6 +44,10 @@ Last activity: 2026-05-25 — Milestone v1.1 started
 | 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | Complete |
 | 2 — Match Analysis and Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | Complete |
 | 3 — Interview Preparation | Users receive role-specific interview questions and prep strategy | Complete |
+| 4 — Auth Foundation | Users can sign in with Google, stay signed in, and /history is protected | Not started |
+| 5 — Database Schema and DAL | Neon Postgres provisioned, Drizzle schema migrated, DAL operational | Not started |
+| 6 — Save After Analysis | Completed analysis is auto-saved; job title/company extracted; interview prep merged | Not started |
+| 7 — History UI | Users can browse, view, update status, and re-run saved applications | Not started |
 
 ---
 
@@ -51,8 +55,8 @@ Last activity: 2026-05-25 — Milestone v1.1 started
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 3/3 |
-| Requirements implemented | 10/10 (JDIN-01, JDIN-02, MATCH-01, MATCH-02, OPT-01, OPT-02, INTV-01, INTV-02, INTV-03, INTV-04) |
+| Phases completed | 3/7 (v1.0 complete; v1.1 not started) |
+| Requirements implemented | 10/26 (v1.0 done; 16 v1.1 pending) |
 | Plans executed | 15 |
 
 ---
@@ -63,6 +67,16 @@ Last activity: 2026-05-25 — Milestone v1.1 started
 
 | Decision | Outcome | Date |
 |----------|---------|------|
+| better-auth over next-auth | next-auth has blocking peer dep conflict with Next.js 16; better-auth 1.6.x is the current recommended replacement | 2026-05-25 |
+| @neondatabase/serverless over @vercel/postgres | @vercel/postgres discontinued Dec 2024; Neon HTTP driver is stateless-correct for serverless | 2026-05-25 |
+| JWT sessions (not DB sessions) | Single-user tool; no server-side revocation needed; avoids sessions table | 2026-05-25 |
+| JSONB columns for analysis and interview data | Maps directly to existing Zod types; zero migration risk as prompts evolve | 2026-05-25 |
+| verifySession() in route handlers (not auth() HOC) | auth() HOC wrapper breaks ReadableStream — documented in Auth.js issue #12485 | 2026-05-25 |
+| proxy.ts replaces middleware.ts | Next.js 16 hard requirement; existing rate-limiting code moves there | 2026-05-25 |
+| Metadata-only query for history list | Do not select resumeText, jdText, or full JSONB blobs in list query — performance constraint | 2026-05-25 |
+| Auto-save on SSE completion | Save triggered automatically when analysis phase === 'done'; no explicit SaveButton | 2026-05-25 |
+| Read-only components for history detail | AnalysisPanel is wired to live SSE; build separate display-only components for saved data | 2026-05-25 |
+| Re-run via navigation (?applicationId=) | No new API surface; pre-populate existing page.tsx form state from DB values | 2026-05-25 |
 | Progress bar dynamic width | Use inline style (style={{ width: score% }}) not dynamic Tailwind class — purged at build time | 2026-05-22 |
 | Stack | Next.js 16 App Router + TypeScript + Tailwind v4 + Anthropic SDK direct | 2026-05-21 |
 | PDF parsing library | unpdf (wraps pdfjs-dist, avoids Next.js build failures) | 2026-05-21 |
@@ -87,14 +101,21 @@ Last activity: 2026-05-25 — Milestone v1.1 started
 
 ### Open Questions (from research)
 
-1. **Vercel tier** — Hobby has 10s timeout; streaming responses reset the clock. Confirm before deploying Phase 2 analysis endpoints.
-2. **Anonymous session IDs** — Pure stateless vs lightweight UUID cookie (24hr TTL) for incremental migration path to accounts. Decide before Phase 1 ships.
-3. **Claude model IDs** — Run `npx @anthropic-ai/sdk list-models` before writing any prompts. Use dated model IDs in production, not aliases.
-4. **JD URL scraping scope** — Define which job board formats (Greenhouse, Lever, Workday) are "supported" before Phase 1 ships. LinkedIn/Indeed require headless browsers — explicitly out of scope.
-5. **Resume test corpus** — Validate parsing against at least 10 real-world formats (single-column Word, two-column PDF, Canva export, image-PDF, DOCX with text boxes) before public exposure.
+1. **better-auth exact API surface at v1.6.x** — auth.api.getSession() is documented, but whether better-auth exposes a verifySession() convenience or requires manual wrapping in dal.ts should be verified against installed package TypeScript types at Phase 4.
+2. **proxy.ts export syntax with better-auth** — better-auth uses toNextJsHandler(auth) for Route Handlers; the proxy export may differ from NextAuth's `export { auth as proxy }`. Verify at install time.
+3. **JSONB score extraction for list view** — history list needs match score without deserializing full JSONB. Either extract score into a dedicated column during Phase 5 schema design, or use Drizzle JSONB expression. Decision at Phase 5.
+4. **Snapshot save timing with partial interview data** — save payload schema must handle absent interview Q+A (user saved before running interview prep). interviewData is nullable JSONB — handle at Phase 6.
+5. **Vercel tier** — Hobby has 10s timeout; streaming responses reset the clock. Confirm before deploying Phase 2 analysis endpoints.
+6. **--legacy-peer-deps for better-auth install** — required due to packaging gap with Next.js 16 peer dep declaration. Cosmetic only — not a runtime issue. Apply at Phase 4 install.
 
 ### Critical Pitfalls to Watch
 
+- **auth() HOC on SSE route handlers** — breaks ReadableStream (Auth.js issue #12485). Use verifySession() from dal.ts at handler body top. Affects /api/analyse, /api/interview-questions, /api/interview-critique.
+- **@vercel/postgres / next-auth** — both wrong for this project. @vercel/postgres is discontinued. next-auth has blocking peer dep conflict with Next.js 16.
+- **DB calls in proxy.ts** — proxy.ts runs on every request including static asset prefetches. Keep proxy.ts JWT-only; all real auth checks go through the DAL.
+- **Duplicating AnalysisPanel on history detail page** — AnalysisPanel is wired to live SSE stream. Build separate display-only components for detail view.
+- **History list query** — must NOT select resumeText, jdText, or full JSONB blobs. Metadata columns only.
+- **DATABASE_URL vs DATABASE_URL_UNPOOLED** — use DATABASE_URL for app queries (Neon HTTP pooled); use DATABASE_URL_UNPOOLED for drizzle-kit migrations.
 - Two-column PDF layouts produce garbled text — enforce parsed-text preview and 200-char minimum gate (Phase 1)
 - Resume rewrites must be constrained to facts in the original — no hallucinated metrics (Phase 2)
 - Match scores must use the defined rubric, not free-form model judgment (Phase 2)
@@ -102,7 +123,7 @@ Last activity: 2026-05-25 — Milestone v1.1 started
 - Prompt injection: wrap all user-supplied content in XML tags from the first LLM call (Phase 2)
 - Rate limiting must be in place before any public link is shared (Phase 1)
 - Use `unpdf` not raw `pdfjs-dist` — raw pdfjs-dist causes build failures in Next.js App Router
-- Middleware runs in Edge Runtime — do not import Node.js-only modules (net, ioredis) in middleware.ts
+- Middleware runs in Edge Runtime — do not import Node.js-only modules (net, ioredis) in middleware.ts / proxy.ts
 - Wave 2 plans 01-02 and 01-03 both modify page.tsx — 01-02 must finish before 01-03 begins
 
 ### Pending Todos
@@ -125,6 +146,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-25: v1.1 roadmap created. 4 phases (4–7), 16/16 v1.1 requirements mapped.
 - 2026-05-25: Plan 03-05 complete. Phase 3 complete. AnalysisPanel gets optional onInterviewPrepReady CTA; page.tsx mounts InterviewPrepPanel behind showInterviewPrep gate. Full end-to-end interview prep flow connected. Build clean.
 - 2026-05-22: Plan 02-06 complete. Phase 2 complete. AnalysisPanel wires useAnalysis into idle/streaming/done/error UI; page.tsx feeds panel onReady callbacks into shared state. Full end-to-end flow works. Build clean.
 - 2026-05-22: Plan 02-05 complete. RewriteDiff controlled component: per-section diff card with Accept/Reject buttons, accepted/rejected badges, and undo support via callback swap.
@@ -144,15 +166,11 @@ None currently.
 ## Session Continuity
 
 **Last session:** 2026-05-25
-**Stopped at:** Completed 03-05-PLAN.md (integration — AnalysisPanel callback + page wiring) — Phase 3 complete
+**Stopped at:** v1.1 roadmap created — 4 phases defined, all 16 requirements mapped
 **Resume file:** None
 
-**Next action:** All 3 phases complete. v1.0 milestone achieved. Ready for deploy to Vercel or further iteration.
+**Next action:** Begin Phase 4 planning with `/gsd:plan-phase 4`
 
 ---
 
 *State initialized: 2026-05-22*
-
-## Operator Next Steps
-
-- Start the next milestone with /gsd-new-milestone

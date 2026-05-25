@@ -6,6 +6,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — 3 phases, 15 plans (shipped 2026-05-25) → [Archive](.planning/milestones/v1.0-ROADMAP.md)
+- 🔄 **v1.1 Persistence & History** — 4 phases (Phases 4–7)
 
 ---
 
@@ -61,6 +62,74 @@
 
 ---
 
+## v1.1 Persistence & History
+
+- [ ] **Phase 4: Auth Foundation** — Google OAuth via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
+- [ ] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations
+- [ ] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction
+- [ ] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component
+
+---
+
+## Phase Details
+
+### Phase 4: Auth Foundation
+**Goal**: Users can sign in with Google, stay signed in across sessions, and are blocked from /history without authentication
+**Depends on**: Phase 3 (v1.0 complete)
+**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05
+**Success Criteria** (what must be TRUE):
+  1. User can click "Sign in with Google", complete the OAuth flow, and land back in the app as an authenticated user
+  2. User can sign out and is returned to a signed-out state
+  3. Unauthenticated user navigating to /history is redirected to the sign-in page
+  4. Authenticated user session survives a browser refresh without re-authenticating
+  5. Analysis run is blocked (returns 401) when the request carries no valid session
+**Plans**: TBD
+**UI hint**: yes
+
+---
+
+### Phase 5: Database Schema and DAL
+**Goal**: A Neon Postgres database is provisioned, migrated, and accessible through a Data Access Layer that all subsequent phases consume
+**Depends on**: Phase 4
+**Requirements**: DATA-01, DATA-02, DATA-03
+**Success Criteria** (what must be TRUE):
+  1. Running `drizzle-kit migrate` against DATABASE_URL_UNPOOLED applies the schema with no errors
+  2. dal.ts functions (verifySession, getApplications, getApplicationById, saveSnapshot, updateStatus) are importable and type-safe against the Drizzle schema
+  3. The schema stores resume text and JD text per snapshot row (required for re-run in Phase 7)
+  4. The applications table schema supports all five status values (Saved, Applied, Interviewing, Offer, Rejected)
+**Plans**: TBD
+
+---
+
+### Phase 6: Save After Analysis
+**Goal**: Every completed analysis is automatically persisted to the database under the authenticated user's account
+**Depends on**: Phase 5
+**Requirements**: SAVE-01, SAVE-02, SAVE-03
+**Success Criteria** (what must be TRUE):
+  1. After analysis SSE completes, the result is automatically saved without any user action — a new application record appears in the DB
+  2. Each saved application record includes a job title and company name extracted from the JD text
+  3. When interview prep completes, the Q+A data is merged into the existing application record (not a new record)
+  4. All three existing LLM route handlers (/api/analyse, /api/interview-questions, /api/interview-critique) return 401 when called without a valid session
+**Plans**: TBD
+**UI hint**: yes
+
+---
+
+### Phase 7: History UI
+**Goal**: Users can browse their saved applications, update application status, view the full saved analysis, and re-run analysis from any saved application
+**Depends on**: Phase 6
+**Requirements**: HIST-01, HIST-02, HIST-03, HIST-04, HIST-05
+**Success Criteria** (what must be TRUE):
+  1. User sees a /history list showing company name, job title, match score, current status badge, and date for every saved application — list loads without deserializing JSONB blobs
+  2. User can change the status of any saved application (Saved / Applied / Interviewing / Offer / Rejected) and the change persists on refresh
+  3. User can open a saved application and see the full analysis (score breakdown, action items, keyword gaps, accepted rewrites) in read-only panels
+  4. User can see saved interview Q+A on the detail page when interview prep was run for that application
+  5. User can click "Re-run" on a saved application — the analysis form is pre-populated with the stored resume text and JD text and a new analysis runs
+**Plans**: TBD
+**UI hint**: yes
+
+---
+
 ## Progress
 
 | Phase | Milestone | Plans | Status | Completed |
@@ -68,6 +137,10 @@
 | 1 — Input Pipeline | v1.0 | 4/4 | ✅ Complete | 2026-05-22 |
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
+| 4 — Auth Foundation | v1.1 | 0/? | Not started | — |
+| 5 — Database Schema and DAL | v1.1 | 0/? | Not started | — |
+| 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
+| 7 — History UI | v1.1 | 0/? | Not started | — |
 
 ---
 
@@ -85,9 +158,26 @@
 | OPT-02 | Phase 2 | ✅ v1.0 |
 | INTV-01 | Phase 3 | ✅ v1.0 |
 | INTV-02 | Phase 3 | ✅ v1.0 |
+| AUTH-01 | Phase 4 | Pending |
+| AUTH-02 | Phase 4 | Pending |
+| AUTH-03 | Phase 4 | Pending |
+| AUTH-04 | Phase 4 | Pending |
+| AUTH-05 | Phase 4 | Pending |
+| DATA-01 | Phase 5 | Pending |
+| DATA-02 | Phase 5 | Pending |
+| DATA-03 | Phase 5 | Pending |
+| SAVE-01 | Phase 6 | Pending |
+| SAVE-02 | Phase 6 | Pending |
+| SAVE-03 | Phase 6 | Pending |
+| HIST-01 | Phase 7 | Pending |
+| HIST-02 | Phase 7 | Pending |
+| HIST-03 | Phase 7 | Pending |
+| HIST-04 | Phase 7 | Pending |
+| HIST-05 | Phase 7 | Pending |
 
-**v1 requirements: 10 total. Covered: 10. Orphans: 0.**
+**v1.0 requirements: 10 total. Covered: 10. Orphans: 0.**
+**v1.1 requirements: 16 total. Covered: 16. Orphans: 0.**
 
 ---
 
-*Created: 2026-05-22 | Last updated: 2026-05-25 after v1.0 milestone*
+*Created: 2026-05-22 | Last updated: 2026-05-25 — v1.1 roadmap added (Phases 4–7)*
