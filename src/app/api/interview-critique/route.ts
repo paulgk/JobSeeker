@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest } from 'next/server'
 import { InterviewCritiqueRequestSchema } from '@/lib/schemas'
 import { CRITIQUE_SYSTEM_PROMPT, buildCritiquePrompt } from '@/lib/interview-prompt'
+import { verifySession } from '@/lib/dal'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -18,6 +19,13 @@ function sseEvent(data: Record<string, unknown>): Uint8Array {
 }
 
 export async function POST(request: NextRequest) {
+  // Auth guard — must be inline (HOC wrappers break ReadableStream SSE)
+  try {
+    await verifySession()
+  } catch {
+    return new Response(null, { status: 401 })
+  }
+
   let body: unknown
   try {
     body = await request.json()

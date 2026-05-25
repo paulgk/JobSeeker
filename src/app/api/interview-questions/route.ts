@@ -7,6 +7,7 @@ import {
   type InterviewPrepResult,
 } from '@/lib/schemas'
 import { QUESTIONS_SYSTEM_PROMPT, buildQuestionsPrompt } from '@/lib/interview-prompt'
+import { verifySession } from '@/lib/dal'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -47,6 +48,13 @@ async function callWithRetry(
 }
 
 export async function POST(request: NextRequest) {
+  // Auth guard — must be inline (HOC wrappers break ReadableStream SSE)
+  try {
+    await verifySession()
+  } catch {
+    return new Response(null, { status: 401 })
+  }
+
   let body: unknown
   try {
     body = await request.json()

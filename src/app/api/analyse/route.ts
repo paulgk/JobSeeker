@@ -3,6 +3,7 @@ import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod'
 import { NextRequest } from 'next/server'
 import { AnalyseRequestSchema, AnalysisResultSchema, type AnalysisResult } from '@/lib/schemas'
 import { SYSTEM_PROMPT, buildUserPrompt } from '@/lib/analysis-prompt'
+import { verifySession } from '@/lib/dal'
 
 export const dynamic = 'force-dynamic' // Prevent Next.js/Vercel CDN caching of SSE route
 export const runtime = 'nodejs' // Node runtime for 60s timeout (not Edge's 10s)
@@ -43,6 +44,13 @@ async function callWithRetry(
 }
 
 export async function POST(request: NextRequest) {
+  // Auth guard — must be inline (HOC wrappers break ReadableStream SSE)
+  try {
+    await verifySession()
+  } catch {
+    return new Response(null, { status: 401 })
+  }
+
   let body: unknown
   try {
     body = await request.json()
