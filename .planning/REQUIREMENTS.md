@@ -8,11 +8,12 @@
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can sign in with Google OAuth (no username/password)
-- [ ] **AUTH-02**: User can sign out
-- [ ] **AUTH-03**: Unauthenticated users are redirected to sign-in before accessing /history
-- [ ] **AUTH-04**: Analysis (run) requires authentication — anonymous analysis is not permitted
-- [ ] **AUTH-05**: User session persists across browser refresh
+- [x] **AUTH-01**: User can sign in with Google OAuth
+- [x] **AUTH-02**: User can sign in with email and password (register + login)
+- [x] **AUTH-03**: User can sign out
+- [x] **AUTH-04**: Unauthenticated users are redirected to sign-in before accessing /history
+- [ ] **AUTH-05**: Analysis (run) requires authentication — anonymous analysis is not permitted
+- [x] **AUTH-06**: User session persists across browser refresh
 
 ### Data Layer
 
@@ -66,11 +67,12 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 4 | Pending |
-| AUTH-02 | Phase 4 | Pending |
-| AUTH-03 | Phase 4 | Pending |
-| AUTH-04 | Phase 4 | Pending |
+| AUTH-01 | Phase 4 | Complete |
+| AUTH-02 | Phase 4 | Complete |
+| AUTH-03 | Phase 4 | Complete |
+| AUTH-04 | Phase 4 | Complete |
 | AUTH-05 | Phase 4 | Pending |
+| AUTH-06 | Phase 4 | Complete |
 | DATA-01 | Phase 5 | Pending |
 | DATA-02 | Phase 5 | Pending |
 | DATA-03 | Phase 5 | Pending |
@@ -84,8 +86,8 @@
 | HIST-05 | Phase 7 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 16 total
-- Mapped to phases: 16
+- v1.1 requirements: 17 total
+- Mapped to phases: 17
 - Unmapped: 0 ✓
 
 ---

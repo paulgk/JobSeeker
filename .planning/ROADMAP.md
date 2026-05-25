@@ -64,7 +64,7 @@
 
 ## v1.1 Persistence & History
 
-- [ ] **Phase 4: Auth Foundation** — Google OAuth via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
+- [ ] **Phase 4: Auth Foundation** — Google OAuth + email/password via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
 - [ ] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations
 - [ ] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction
 - [ ] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component
@@ -74,16 +74,21 @@
 ## Phase Details
 
 ### Phase 4: Auth Foundation
-**Goal**: Users can sign in with Google, stay signed in across sessions, and are blocked from /history without authentication
+**Goal**: Users can sign in with Google OAuth or email/password, stay signed in across sessions, and are blocked from /history without authentication
 **Depends on**: Phase 3 (v1.0 complete)
-**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05
+**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06
 **Success Criteria** (what must be TRUE):
   1. User can click "Sign in with Google", complete the OAuth flow, and land back in the app as an authenticated user
-  2. User can sign out and is returned to a signed-out state
-  3. Unauthenticated user navigating to /history is redirected to the sign-in page
-  4. Authenticated user session survives a browser refresh without re-authenticating
-  5. Analysis run is blocked (returns 401) when the request carries no valid session
-**Plans**: TBD
+  2. User can register with email + password and sign in with those credentials on subsequent visits
+  3. User can sign out and is returned to a signed-out state
+  4. Unauthenticated user navigating to /history is redirected to the sign-in page
+  5. Authenticated user session survives a browser refresh without re-authenticating
+  6. Analysis run is blocked (returns 401) when the request carries no valid session
+**Plans**: 3 plans
+Plans:
+- [x] 04-01-PLAN.md — Auth infrastructure: proxy.ts rename + session guard, auth.ts (memory adapter), auth-client.ts, dal.ts, catch-all route, .env.example
+- [ ] 04-02-PLAN.md — Sign-in page: impeccable design + shadcn/ui implementation (email/password tabs + Google OAuth button)
+- [ ] 04-03-PLAN.md — SSE auth guards: verifySession() added to analyse, interview-questions, interview-critique route handlers
 **UI hint**: yes
 
 ---
@@ -137,7 +142,7 @@
 | 1 — Input Pipeline | v1.0 | 4/4 | ✅ Complete | 2026-05-22 |
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
-| 4 — Auth Foundation | v1.1 | 0/? | Not started | — |
+| 4 — Auth Foundation | v1.1 | 1/3 | In Progress|  |
 | 5 — Database Schema and DAL | v1.1 | 0/? | Not started | — |
 | 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
@@ -163,6 +168,7 @@
 | AUTH-03 | Phase 4 | Pending |
 | AUTH-04 | Phase 4 | Pending |
 | AUTH-05 | Phase 4 | Pending |
+| AUTH-06 | Phase 4 | Pending |
 | DATA-01 | Phase 5 | Pending |
 | DATA-02 | Phase 5 | Pending |
 | DATA-03 | Phase 5 | Pending |
@@ -180,4 +186,4 @@
 
 ---
 
-*Created: 2026-05-22 | Last updated: 2026-05-25 — v1.1 roadmap added (Phases 4–7)*
+*Created: 2026-05-22 | Last updated: 2026-05-25 — Phase 4 plans added (04-01, 04-02, 04-03)*
