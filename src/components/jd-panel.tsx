@@ -9,9 +9,10 @@ import { TextPreview } from '@/components/text-preview'
 
 interface JobDescriptionPanelProps {
   onReady?: (text: string) => void
+  locked?: boolean
 }
 
-export function JobDescriptionPanel({ onReady }: JobDescriptionPanelProps) {
+export function JobDescriptionPanel({ onReady, locked }: JobDescriptionPanelProps) {
   const [tab, setTab] = useState<'paste' | 'url'>('paste')
   const [pasteText, setPasteText] = useState('')
   const [urlInput, setUrlInput] = useState('')
@@ -20,6 +21,7 @@ export function JobDescriptionPanel({ onReady }: JobDescriptionPanelProps) {
   const [error, setError] = useState<string | null>(null)
 
   function handleTabChange(value: string) {
+    if (locked) return
     setTab(value as 'paste' | 'url')
     setError(null)
     setExtractedText('')
@@ -62,58 +64,58 @@ export function JobDescriptionPanel({ onReady }: JobDescriptionPanelProps) {
         onReady?.(data.text)
       }
     } catch {
-      setError('Network error. Please try again or paste the job description text.')
+      setError('Network error. Try again or paste the job description.')
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1">
       <Tabs
         value={tab}
         onValueChange={handleTabChange}
         className="flex-1 flex flex-col"
       >
         <TabsList className="grid grid-cols-2 w-full">
-          <TabsTrigger value="paste">Paste Text</TabsTrigger>
-          <TabsTrigger value="url">Fetch from URL</TabsTrigger>
+          <TabsTrigger value="paste" disabled={locked}>Paste text</TabsTrigger>
+          <TabsTrigger value="url" disabled={locked}>Fetch from URL</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="paste" className="flex-1 flex flex-col gap-3 pt-3">
+        <TabsContent value="paste" className="flex-1 flex flex-col gap-3 pt-4">
           <Textarea
-            placeholder="Paste the full job description here…"
-            className="flex-1 min-h-[180px] resize-none text-sm"
+            placeholder="Paste the job description…"
+            className="flex-1 min-h-[200px] resize-none text-sm"
             value={pasteText}
+            disabled={locked}
             onChange={(e) => setPasteText(e.target.value)}
           />
           <Button
             onClick={handlePasteConfirm}
-            disabled={pasteText.trim().length === 0}
+            disabled={pasteText.trim().length === 0 || locked}
           >
-            Use This Job Description
+            Use this job description
           </Button>
         </TabsContent>
 
-        <TabsContent value="url" className="flex-1 flex flex-col gap-3 pt-3">
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">
-              Works with Greenhouse and Lever job pages. Does not work with LinkedIn, Indeed, Glassdoor, or JavaScript-heavy ATS portals.
-            </p>
-            <input
-              type="url"
-              placeholder="https://boards.greenhouse.io/company/jobs/123"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              value={urlInput}
-              onChange={(e) => setUrlInput(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleUrlFetch() }}
-            />
-          </div>
+        <TabsContent value="url" className="flex-1 flex flex-col gap-3 pt-4">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Works with Greenhouse and Lever. LinkedIn, Indeed, and JavaScript-heavy portals aren&apos;t supported.
+          </p>
+          <input
+            type="url"
+            placeholder="https://boards.greenhouse.io/company/jobs/123"
+            className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+            value={urlInput}
+            disabled={locked}
+            onChange={(e) => setUrlInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter' && !locked) handleUrlFetch() }}
+          />
           <Button
             onClick={handleUrlFetch}
-            disabled={isLoading || urlInput.trim().length === 0}
+            disabled={isLoading || urlInput.trim().length === 0 || locked}
           >
-            {isLoading ? 'Fetching…' : 'Fetch Job Description'}
+            {isLoading ? 'Fetching…' : 'Fetch job description'}
           </Button>
         </TabsContent>
       </Tabs>

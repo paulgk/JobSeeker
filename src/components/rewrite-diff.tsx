@@ -1,9 +1,7 @@
 'use client'
 
-import { Check, X } from 'lucide-react'
 import { InlineDiff } from '@/lib/diff'
 import type { RewriteState } from '@/hooks/use-analysis'
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
@@ -15,55 +13,41 @@ interface RewriteDiffProps {
 
 export function RewriteDiff({ rewrite, onAccept, onReject }: RewriteDiffProps) {
   const { status, section } = rewrite
+  const isSettled = status !== 'pending'
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between gap-2">
-          <span>{section.sectionName}</span>
-          {status === 'accepted' && (
-            <Badge className="bg-green-100 text-green-800 border-green-200">
-              <Check className="size-3" />
-              Accepted
-            </Badge>
-          )}
-          {status === 'rejected' && (
-            <Badge variant="outline" className="text-muted-foreground line-through">
-              Rejected
-            </Badge>
-          )}
-        </CardTitle>
-      </CardHeader>
+    <div
+      className={[
+        'rounded-xl ring-1 ring-border overflow-hidden transition-opacity',
+        status === 'rejected' ? 'opacity-50' : 'opacity-100',
+      ].join(' ')}
+    >
+      <div className="px-5 py-4 flex items-center justify-between gap-3 border-b border-border bg-card">
+        <span className="text-sm font-semibold text-foreground">{section.sectionName}</span>
+        {status === 'accepted' && (
+          <Badge className="bg-accent text-foreground border-0 text-xs">Accepted</Badge>
+        )}
+        {status === 'rejected' && (
+          <Badge variant="outline" className="text-muted-foreground text-xs">Dismissed</Badge>
+        )}
+      </div>
 
-      <CardContent>
+      <div className="px-5 py-4 bg-background">
         <InlineDiff original={section.originalText} rewritten={section.rewrittenText} />
-      </CardContent>
+      </div>
 
-      {status === 'pending' && (
-        <CardFooter className="gap-2">
-          <Button variant="default" size="sm" onClick={onAccept}>
-            <Check className="size-4" />
-            Accept
+      <div className="px-5 py-3 flex items-center gap-2 bg-card border-t border-border">
+        {!isSettled ? (
+          <>
+            <Button size="sm" onClick={onAccept}>Accept this rewrite</Button>
+            <Button variant="ghost" size="sm" onClick={onReject}>Dismiss</Button>
+          </>
+        ) : (
+          <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={status === 'accepted' ? onReject : onAccept}>
+            Undo
           </Button>
-          <Button variant="outline" size="sm" onClick={onReject}>
-            <X className="size-4" />
-            Reject
-          </Button>
-        </CardFooter>
-      )}
-
-      {status !== 'pending' && (
-        <CardFooter className="gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-muted-foreground"
-            onClick={status === 'accepted' ? onReject : onAccept}
-          >
-            {status === 'accepted' ? 'Undo Accept' : 'Undo Reject'}
-          </Button>
-        </CardFooter>
-      )}
-    </Card>
+        )}
+      </div>
+    </div>
   )
 }

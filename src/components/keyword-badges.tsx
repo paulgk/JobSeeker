@@ -1,10 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 interface KeywordBadgesProps {
@@ -13,26 +6,23 @@ interface KeywordBadgesProps {
 
 export function KeywordBadges({ keywords }: KeywordBadgesProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Keyword Gaps</CardTitle>
-        <CardDescription>
-          From the job description, missing in your resume — add where truthful.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {keywords.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No significant keyword gaps found.</p>
-        ) : (
-          <div className="flex flex-wrap gap-2">
-            {keywords.map((keyword) => (
-              <Badge key={keyword} variant="outline">
-                {keyword}
-              </Badge>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <section aria-label="Keyword gaps">
+      <h2 className="text-xl font-semibold tracking-tight text-foreground mb-2">Keywords to add</h2>
+      <p className="text-sm text-muted-foreground mb-5 max-w-[65ch]">
+        These appear in the job description but not in your resume. Add them where true.
+      </p>
+
+      {keywords.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No significant keyword gaps found.</p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {keywords.map((keyword) => (
+            <Badge key={keyword} variant="outline" className="text-xs font-medium">
+              {keyword}
+            </Badge>
+          ))}
+        </div>
+      )}
+    </section>
   )
 }

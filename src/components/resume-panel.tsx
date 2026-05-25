@@ -9,21 +9,20 @@ import { TextPreview } from '@/components/text-preview'
 
 interface ResumePanelProps {
   onReady?: (text: string) => void
+  locked?: boolean
 }
 
-export function ResumePanel({ onReady }: ResumePanelProps) {
+export function ResumePanel({ onReady, locked }: ResumePanelProps) {
   const [tab, setTab] = useState<'upload' | 'paste'>('upload')
   const [pasteText, setPasteText] = useState('')
   const [extractedText, setExtractedText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [fileName, setFileName] = useState<string | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-
+  async function processFile(file: File) {
     setError(null)
     setExtractedText('')
     setFileName(file.name)
@@ -32,7 +31,6 @@ export function ResumePanel({ onReady }: ResumePanelProps) {
     try {
       const formData = new FormData()
       formData.append('file', file)
-
       const res = await fetch('/api/parse-resume', { method: 'POST', body: formData })
       const data = await res.json()
 
@@ -44,17 +42,33 @@ export function ResumePanel({ onReady }: ResumePanelProps) {
         onReady?.(data.text)
       }
     } catch {
-      setError('Network error. Please try again or paste your resume text.')
+      setError('Network error. Try again or paste your resume text.')
       setFileName(null)
     } finally {
       setIsLoading(false)
     }
   }
 
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (file) await processFile(file)
+  }
+
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault()
+    setIsDragging(false)
+    const file = e.dataTransfer.files[0]
+    if (file?.type === 'application/pdf') {
+      processFile(file)
+    } else {
+      setError('Please drop a PDF file.')
+    }
+  }
+
   function handlePasteConfirm() {
     const trimmed = pasteText.trim()
     if (trimmed.length < 200) {
-      setError('Resume text must be at least 200 characters. Please paste more of your resume.')
+      setError('Resume text must be at least 200 characters.')
       return
     }
     setError(null)
@@ -63,10 +77,11 @@ export function ResumePanel({ onReady }: ResumePanelProps) {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1">
       <Tabs
         value={tab}
         onValueChange={(v) => {
+          if (locked) return
           setTab(v as 'upload' | 'paste')
           setError(null)
           setExtractedText('')
@@ -74,28 +89,43 @@ export function ResumePanel({ onReady }: ResumePanelProps) {
         className="flex-1 flex flex-col"
       >
         <TabsList className="grid grid-cols-2 w-full">
-          <TabsTrigger value="upload">Upload PDF</TabsTrigger>
-          <TabsTrigger value="paste">Paste Text</TabsTrigger>
+          <TabsTrigger value="upload" disabled={locked}>Upload PDF</TabsTrigger>
+          <TabsTrigger value="paste" disabled={locked}>Paste text</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="upload" className="flex-1 flex flex-col gap-3 pt-3">
+        <TabsContent value="upload" className="flex-1 flex flex-col gap-3 pt-4">
           <div
-            className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-8 gap-3 cursor-pointer hover:border-primary/60 transition-colors"
-            onClick={() => fileInputRef.current?.click()}
+            className={[
+              'flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 cursor-pointer transition-colors',
+              isDragging ? 'border-foreground/40 bg-muted/50' : 'border-border hover:border-foreground/30',
+              locked ? 'pointer-events-none opacity-50' : '',
+            ].join(' ')}
+            onClick={() => !locked && fileInputRef.current?.click()}
+            onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
+            onDragLeave={() => setIsDragging(false)}
+            onDrop={handleDrop}
           >
-            <p className="text-sm text-muted-foreground text-center">
-              {fileName
-                ? `Selected: ${fileName}`
-                : 'Click to select a PDF resume (max 5 MB)'}
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={isLoading}
-              onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click() }}
-            >
-              {isLoading ? 'Parsing…' : 'Choose PDF'}
-            </Button>
+            {isLoading ? (
+              <p className="text-sm text-muted-foreground">Parsing {fileName}…</p>
+            ) : fileName && !error ? (
+              <>
+                <p className="text-sm font-medium text-foreground">{fileName}</p>
+                <p className="text-xs text-muted-foreground">Parsed successfully</p>
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-foreground font-medium">Drop your PDF here, or click to select</p>
+                <p className="text-xs text-muted-foreground">Max 5 MB · PDF only</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={isLoading || locked}
+                  onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click() }}
+                >
+                  Choose file
+                </Button>
+              </>
+            )}
           </div>
           <input
             ref={fileInputRef}
@@ -106,18 +136,19 @@ export function ResumePanel({ onReady }: ResumePanelProps) {
           />
         </TabsContent>
 
-        <TabsContent value="paste" className="flex-1 flex flex-col gap-3 pt-3">
+        <TabsContent value="paste" className="flex-1 flex flex-col gap-3 pt-4">
           <Textarea
-            placeholder="Paste your full resume text here…"
-            className="flex-1 min-h-[180px] resize-none font-mono text-sm"
+            placeholder="Paste your full resume…"
+            className="flex-1 min-h-[200px] resize-none font-mono text-sm"
             value={pasteText}
+            disabled={locked}
             onChange={(e) => setPasteText(e.target.value)}
           />
           <Button
             onClick={handlePasteConfirm}
-            disabled={pasteText.trim().length === 0}
+            disabled={pasteText.trim().length === 0 || locked}
           >
-            Use This Resume
+            Use this resume
           </Button>
         </TabsContent>
       </Tabs>
