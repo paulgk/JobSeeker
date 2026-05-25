@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Persistence & History
-status: Roadmap created
-stopped_at: v1.1 roadmap created — 4 phases defined, all 16 requirements mapped
-last_updated: "2026-05-25T07:44:29.788Z"
-last_activity: 2026-05-25 — v1.1 roadmap created (4 phases, 16 requirements mapped)
+status: In progress
+stopped_at: Phase 4 complete — proxy.ts, auth.ts, dal.ts, sign-in page, SSE guards all done
+last_updated: "2026-05-25T08:30:00.000Z"
+last_activity: 2026-05-25 — Phase 4 (Auth Foundation) complete. 3/3 plans executed.
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
-  percent: 0
+  completed_plans: 3
+  percent: 25
 ---
 
 # State: JobSeeker
@@ -33,10 +33,10 @@ progress:
 
 ## Current Position
 
-Phase: Defining phases
-Plan: —
-Status: Roadmap created
-Last activity: 2026-05-25 — v1.1 roadmap created (4 phases, 16 requirements mapped)
+Phase: 4 — Auth Foundation
+Plan: All 3 complete (04-01, 04-02, 04-03)
+Status: Phase 4 complete
+Last activity: 2026-05-25 — Phase 4 all 3 plans executed and committed
 
 ## Phase Summary
 
@@ -45,7 +45,7 @@ Last activity: 2026-05-25 — v1.1 roadmap created (4 phases, 16 requirements ma
 | 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | Complete |
 | 2 — Match Analysis and Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | Complete |
 | 3 — Interview Preparation | Users receive role-specific interview questions and prep strategy | Complete |
-| 4 — Auth Foundation | Users can sign in with Google, stay signed in, and /history is protected | Not started |
+| 4 — Auth Foundation | Users can sign in with Google, stay signed in, and /history is protected | Complete |
 | 5 — Database Schema and DAL | Neon Postgres provisioned, Drizzle schema migrated, DAL operational | Not started |
 | 6 — Save After Analysis | Completed analysis is auto-saved; job title/company extracted; interview prep merged | Not started |
 | 7 — History UI | Users can browse, view, update status, and re-run saved applications | Not started |
@@ -56,9 +56,9 @@ Last activity: 2026-05-25 — v1.1 roadmap created (4 phases, 16 requirements ma
 
 | Metric | Value |
 |--------|-------|
-| Phases completed | 3/7 (v1.0 complete; v1.1 not started) |
-| Requirements implemented | 10/26 (v1.0 done; 16 v1.1 pending) |
-| Plans executed | 15 |
+| Phases completed | 4/7 (v1.0 + Phase 4 complete) |
+| Requirements implemented | 16/26 (v1.0 + AUTH-01 through AUTH-06) |
+| Plans executed | 18 |
 
 ---
 
@@ -147,6 +147,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-25: Phase 4 complete. proxy.ts (Next.js 16 rename + /history guard), auth.ts (memory adapter + Google + email/password), dal.ts (verifySession), sign-in page, SSE route guards. AUTH-01 through AUTH-06 satisfied.
 - 2026-05-25: v1.1 roadmap created. 4 phases (4–7), 16/16 v1.1 requirements mapped.
 - 2026-05-25: Plan 03-05 complete. Phase 3 complete. AnalysisPanel gets optional onInterviewPrepReady CTA; page.tsx mounts InterviewPrepPanel behind showInterviewPrep gate. Full end-to-end interview prep flow connected. Build clean.
 - 2026-05-22: Plan 02-06 complete. Phase 2 complete. AnalysisPanel wires useAnalysis into idle/streaming/done/error UI; page.tsx feeds panel onReady callbacks into shared state. Full end-to-end flow works. Build clean.
@@ -166,11 +167,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-25T07:44:29.783Z
-**Stopped at:** v1.1 roadmap created — 4 phases defined, all 16 requirements mapped
+**Last session:** 2026-05-25
+**Stopped at:** Phase 4 (Auth Foundation) complete — all 3 plans executed
 **Resume file:** None
 
-**Next action:** Begin Phase 4 planning with `/gsd:plan-phase 4`
+**Next action:** Begin Phase 5 planning with `/gsd:plan-phase 5`
 
 ---
 

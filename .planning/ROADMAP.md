@@ -142,7 +142,7 @@ Plans:
 | 1 — Input Pipeline | v1.0 | 4/4 | ✅ Complete | 2026-05-22 |
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
-| 4 — Auth Foundation | v1.1 | 2/3 | In Progress|  |
+| 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 0/? | Not started | — |
 | 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
@@ -163,12 +163,12 @@ Plans:
 | OPT-02 | Phase 2 | ✅ v1.0 |
 | INTV-01 | Phase 3 | ✅ v1.0 |
 | INTV-02 | Phase 3 | ✅ v1.0 |
-| AUTH-01 | Phase 4 | Pending |
-| AUTH-02 | Phase 4 | Pending |
-| AUTH-03 | Phase 4 | Pending |
-| AUTH-04 | Phase 4 | Pending |
-| AUTH-05 | Phase 4 | Pending |
-| AUTH-06 | Phase 4 | Pending |
+| AUTH-01 | Phase 4 | ✅ v1.1 |
+| AUTH-02 | Phase 4 | ✅ v1.1 |
+| AUTH-03 | Phase 4 | ✅ v1.1 |
+| AUTH-04 | Phase 4 | ✅ v1.1 |
+| AUTH-05 | Phase 4 | ✅ v1.1 |
+| AUTH-06 | Phase 4 | ✅ v1.1 |
 | DATA-01 | Phase 5 | Pending |
 | DATA-02 | Phase 5 | Pending |
 | DATA-03 | Phase 5 | Pending |
