@@ -12,7 +12,7 @@
 - [x] **AUTH-02**: User can sign in with email and password (register + login)
 - [x] **AUTH-03**: User can sign out
 - [x] **AUTH-04**: Unauthenticated users are redirected to sign-in before accessing /history
-- [ ] **AUTH-05**: Analysis (run) requires authentication — anonymous analysis is not permitted
+- [x] **AUTH-05**: Analysis (run) requires authentication — anonymous analysis is not permitted
 - [x] **AUTH-06**: User session persists across browser refresh
 
 ### Data Layer
@@ -71,7 +71,7 @@
 | AUTH-02 | Phase 4 | Complete |
 | AUTH-03 | Phase 4 | Complete |
 | AUTH-04 | Phase 4 | Complete |
-| AUTH-05 | Phase 4 | Pending |
+| AUTH-05 | Phase 4 | Complete |
 | AUTH-06 | Phase 4 | Complete |
 | DATA-01 | Phase 5 | Pending |
 | DATA-02 | Phase 5 | Pending |

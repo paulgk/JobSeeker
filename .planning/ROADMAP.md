@@ -88,7 +88,7 @@
 Plans:
 - [x] 04-01-PLAN.md — Auth infrastructure: proxy.ts rename + session guard, auth.ts (memory adapter), auth-client.ts, dal.ts, catch-all route, .env.example
 - [ ] 04-02-PLAN.md — Sign-in page: impeccable design + shadcn/ui implementation (email/password tabs + Google OAuth button)
-- [ ] 04-03-PLAN.md — SSE auth guards: verifySession() added to analyse, interview-questions, interview-critique route handlers
+- [x] 04-03-PLAN.md — SSE auth guards: verifySession() added to analyse, interview-questions, interview-critique route handlers
 **UI hint**: yes
 
 ---
@@ -142,7 +142,7 @@ Plans:
 | 1 — Input Pipeline | v1.0 | 4/4 | ✅ Complete | 2026-05-22 |
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
-| 4 — Auth Foundation | v1.1 | 1/3 | In Progress|  |
+| 4 — Auth Foundation | v1.1 | 2/3 | In Progress|  |
 | 5 — Database Schema and DAL | v1.1 | 0/? | Not started | — |
 | 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
