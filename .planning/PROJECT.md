@@ -1,8 +1,22 @@
 # JobSeeker
 
+## Current Milestone: v1.1 Persistence & History
+
+**Goal:** Replace the stateless one-shot session with a Google-authenticated app that saves every analysis so users can revisit match results, accepted rewrites, and interview prep weeks after the original run.
+
+**Target features:**
+- Google OAuth sign-in (NextAuth.js)
+- Vercel Postgres data layer
+- Application history list with status tags (Applied / Interviewing / Offer / Rejected)
+- Full saved state per analysis (score, action items, keyword gaps, accepted rewrites, interview Q+A)
+- Stored resume + JD inputs with re-run capability
+- All UI/UX via impeccable skill
+
+---
+
 ## What This Is
 
-A web application that helps job seekers analyse a job description against their resume, receive a match score with actionable improvements, get AI-rewritten resume sections to review and accept, and prepare for interviews with role-specific questions and coaching — all in a single stateless session with no account required.
+A web application that helps job seekers analyse a job description against their resume, receive a match score with actionable improvements, get AI-rewritten resume sections to review and accept, and prepare for interviews with role-specific questions and coaching — all backed by persistent history so users can return weeks later.
 
 ## Core Value
 
@@ -31,12 +45,13 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 - ✓ App generates JD-specific interview questions tailored to the role's requirements — v1.0
 - ✓ App provides interview tips and preparation strategy tailored to this role type — v1.0
 
-### Active (v1.1 candidates)
+### Active (v1.1)
 
-- [ ] UX polish pass — spacing, mobile layout, streaming feedback quality, accept/reject interaction refinement
-- [ ] Vercel deployment and production configuration (ANTHROPIC_API_KEY, rate limiting, environment)
-- [ ] End-to-end testing with real resume + JD pairs across diverse formats
-- [ ] Resume test corpus validation (single-column Word, two-column PDF, Canva export, DOCX with text boxes)
+- [ ] AUTH-01: Google OAuth sign-in via NextAuth.js
+- [ ] PERSIST-01: Vercel Postgres data layer — users, applications, analysis snapshots
+- [ ] HIST-01: Application history list with status tags (Applied / Interviewing / Offer / Rejected)
+- [ ] HIST-02: Full saved state per analysis (score, action items, keyword gaps, accepted rewrites, interview Q+A)
+- [ ] HIST-03: Stored resume + JD inputs with re-run capability from saved application
 
 ### v2 Requirements
 
@@ -83,10 +98,28 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 
 ## Constraints
 
-- **Scope**: Stateless v1 — no login, no persistence across sessions
+- **Scope v1.1**: Personal tool for one user initially; stateless session replaced with persisted analysis history
 - **AI dependency**: Claude API is the core engine for analysis, rewriting, and coaching
 - **Audience**: Demo quality must be high enough to impress; not throwaway prototype
 - **Cost**: Haiku for coaching (cheap), Sonnet for structured analysis and questions (accurate)
+- **UI/UX**: All frontend design work via the impeccable skill
+
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd:complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
 
 ---
-*Last updated: 2026-05-25 after v1.0 milestone*
+*Last updated: 2026-05-25 — v1.1 milestone started*
