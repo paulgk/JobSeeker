@@ -103,7 +103,7 @@ Plans:
 - [x] 03-02-PLAN.md — API routes: interview-questions/route.ts (Sonnet, zodOutputFormat, SSE) + interview-critique/route.ts (Haiku, raw stream, SSE) (INTV-01, INTV-02)
 - [x] 03-03-PLAN.md — Client data layer: use-interview-prep.ts hook with full 10-action reducer and per-question SSE consumers (INTV-01, INTV-02)
 - [x] 03-04-PLAN.md — Display components: InterviewPrepPanel (phase-gated orchestrator) + QuestionCard (stateless, expand/draft/critique) (INTV-01, INTV-02)
-- [ ] 03-05-PLAN.md — Integration: AnalysisPanel onInterviewPrepReady callback + page.tsx showInterviewPrep wiring, end-to-end smoke test (INTV-01, INTV-02)
+- [x] 03-05-PLAN.md — Integration: AnalysisPanel onInterviewPrepReady callback + page.tsx showInterviewPrep wiring, end-to-end smoke test (INTV-01, INTV-02)
 
 ---
 
