@@ -83,3 +83,44 @@ export const ApiErrorSchema = z.object({
     .optional(),
 })
 export type ApiError = z.infer<typeof ApiErrorSchema>
+
+// ── Interview Preparation (Phase 3 LLM call) ──────────────────────────────────
+
+export const InterviewQuestionsRequestSchema = z.object({
+  resumeText: z.string().min(200, 'Resume must be at least 200 characters'),
+  jdText: z.string().min(50, 'Job description must be at least 50 characters'),
+})
+export type InterviewQuestionsRequest = z.infer<typeof InterviewQuestionsRequestSchema>
+
+const InterviewQuestionSchema = z.object({
+  question: z.string(),
+  category: z.enum(['behavioural', 'technical', 'situational', 'role-specific']),
+  rationale: z.string(),
+  modelAnswer: z.string(),
+})
+
+export const InterviewPrepResultSchema = z.object({
+  questions: z.array(InterviewQuestionSchema).min(5).max(8),
+  prepStrategy: z.object({
+    seniorityLevel: z.string(),
+    domainContext: z.string(),
+    tips: z.array(z.string()),
+  }),
+})
+export type InterviewPrepResult = z.infer<typeof InterviewPrepResultSchema>
+
+// SSE event shapes emitted by /api/interview-questions
+export const InterviewQuestionsEventSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('start') }),
+  z.object({ type: z.literal('chunk'), content: z.string() }),
+  z.object({ type: z.literal('result'), data: InterviewPrepResultSchema }),
+  z.object({ type: z.literal('error'), message: z.string() }),
+  z.object({ type: z.literal('done') }),
+])
+
+export const InterviewCritiqueRequestSchema = z.object({
+  question: z.string().min(10),
+  modelAnswer: z.string().min(50),
+  draftAnswer: z.string().min(20, 'Answer must be at least 20 characters'),
+})
+export type InterviewCritiqueRequest = z.infer<typeof InterviewCritiqueRequestSchema>
