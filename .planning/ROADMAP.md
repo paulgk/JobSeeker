@@ -96,13 +96,13 @@ Plans:
 - Questions must be grounded explicitly in JD content — enforce in system prompt
 - Sonnet-tier model for question generation; Haiku-tier acceptable for tips (confirm at implementation time)
 
-**Plans:** 3/5 plans executed
+**Plans:** 4/5 plans executed
 
 Plans:
 - [x] 03-01-PLAN.md — Foundation: append interview schemas to schemas.ts, create interview-prompt.ts with system prompts and builders (INTV-01, INTV-02)
 - [x] 03-02-PLAN.md — API routes: interview-questions/route.ts (Sonnet, zodOutputFormat, SSE) + interview-critique/route.ts (Haiku, raw stream, SSE) (INTV-01, INTV-02)
 - [x] 03-03-PLAN.md — Client data layer: use-interview-prep.ts hook with full 10-action reducer and per-question SSE consumers (INTV-01, INTV-02)
-- [ ] 03-04-PLAN.md — Display components: InterviewPrepPanel (phase-gated orchestrator) + QuestionCard (stateless, expand/draft/critique) (INTV-01, INTV-02)
+- [x] 03-04-PLAN.md — Display components: InterviewPrepPanel (phase-gated orchestrator) + QuestionCard (stateless, expand/draft/critique) (INTV-01, INTV-02)
 - [ ] 03-05-PLAN.md — Integration: AnalysisPanel onInterviewPrepReady callback + page.tsx showInterviewPrep wiring, end-to-end smoke test (INTV-01, INTV-02)
 
 ---
@@ -113,7 +113,7 @@ Plans:
 |-------|------|--------------|--------|
 | 1 — Input Pipeline | Users confirm resume and JD content is correctly captured | RESIN-01, RESIN-02, JDIN-01, JDIN-02 | Complete |
 | 2 — Match Analysis and Resume Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | MATCH-01, MATCH-02, OPT-01, OPT-02 | Complete |
-| 3 — Interview Preparation | 3/5 | In Progress|  |
+| 3 — Interview Preparation | 4/5 | In Progress|  |
 
 ---
 
