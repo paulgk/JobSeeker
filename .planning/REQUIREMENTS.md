@@ -24,7 +24,7 @@
 ### Save & History
 
 - [x] **SAVE-01**: Analysis result is auto-saved to history when analysis completes successfully
-- [ ] **SAVE-02**: Job title and company name are auto-extracted from the JD text and stored with each saved application
+- [x] **SAVE-02**: Job title and company name are auto-extracted from the JD text and stored with each saved application
 - [x] **SAVE-03**: Interview prep result is saved to the same application record when interview prep completes
 
 ### History UI
@@ -77,7 +77,7 @@
 | DATA-02 | Phase 5 | Pending |
 | DATA-03 | Phase 5 | Pending |
 | SAVE-01 | Phase 6 | Complete |
-| SAVE-02 | Phase 6 | Pending |
+| SAVE-02 | Phase 6 | Complete |
 | SAVE-03 | Phase 6 | Complete |
 | HIST-01 | Phase 7 | Pending |
 | HIST-02 | Phase 7 | Pending |
