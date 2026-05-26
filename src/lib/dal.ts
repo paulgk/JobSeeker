@@ -92,3 +92,14 @@ export async function updateInterviewData(
     .set({ interviewData, updatedAt: new Date() })
     .where(and(eq(applications.id, id), eq(applications.userId, userId)))
 }
+
+export async function updateApplicationMeta(
+  userId: string,
+  id: string,
+  data: { jobTitle: string; company: string }
+): Promise<void> {
+  await db
+    .update(applications)
+    .set({ jobTitle: data.jobTitle, company: data.company, updatedAt: new Date() })
+    .where(and(eq(applications.id, id), eq(applications.userId, userId)))
+}
