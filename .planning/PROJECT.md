@@ -1,16 +1,21 @@
 # JobSeeker
 
-## Current Milestone: v1.1 Persistence & History
+## Current State: v1.1 SHIPPED — 2026-05-26
 
-**Goal:** Replace the stateless one-shot session with a Google-authenticated app that saves every analysis so users can revisit match results, accepted rewrites, and interview prep weeks after the original run.
+**v1.1 shipped.** Google-authenticated app with persistent analysis history. Users sign in with Google OAuth or email/password, run analysis, and all results are auto-saved to a Neon Postgres database. Users can browse history, update application status, view saved analysis read-only, edit company/role inline, trigger interview prep from the detail page, and re-run analysis from any saved application.
 
-**Target features:**
-- Google OAuth sign-in (NextAuth.js)
-- Vercel Postgres data layer
-- Application history list with status tags (Applied / Interviewing / Offer / Rejected)
-- Full saved state per analysis (score, action items, keyword gaps, accepted rewrites, interview Q+A)
-- Stored resume + JD inputs with re-run capability
-- All UI/UX via impeccable skill
+Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthropic SDK direct (claude-sonnet-4-6 + claude-haiku-4-5-20251001). better-auth 1.6.11. Neon Postgres + Drizzle ORM. Deployed to Vercel (not yet configured).
+
+~4,500 LOC TypeScript across 34 plans, 8 phases. Build clean. Zero type errors.
+
+## Next Milestone Goals
+
+Define with `/gsd:new-milestone`. Likely candidates from backlog:
+
+- UX polish pass (deferred from v1.1) — layout, spacing, mobile, loading states, streaming feedback quality
+- Delete application from history (HIST-V2-03)
+- Notes field per application (HIST-V2-02)
+- Score trend chart (HIST-V2-01)
 
 ---
 
@@ -20,15 +25,7 @@ A web application that helps job seekers analyse a job description against their
 
 ## Core Value
 
-A job seeker pastes their resume and a JD and walks away with a smarter, tailored resume and a clear action plan to land the interview.
-
-## Current State
-
-**v1.0 shipped 2026-05-25.** Stateless single-session tool. No auth, no DB.
-
-Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthropic SDK direct (claude-sonnet-4-6 + claude-haiku-4-5-20251001). Deployed to Vercel (not yet configured).
-
-~2,700 LOC TypeScript across 15 plans, 3 phases. Build clean. Zero type errors.
+A job seeker pastes their resume and a JD and walks away with a smarter, tailored resume and a clear action plan to land the interview — and can return weeks later to revisit their analysis and prepare for interview calls.
 
 ## Requirements
 
@@ -45,13 +42,34 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 - ✓ App generates JD-specific interview questions tailored to the role's requirements — v1.0
 - ✓ App provides interview tips and preparation strategy tailored to this role type — v1.0
 
-### Active (v1.1)
+### Validated (v1.1)
 
-- [ ] AUTH-01: Google OAuth sign-in via NextAuth.js
-- [ ] PERSIST-01: Vercel Postgres data layer — users, applications, analysis snapshots
-- [ ] HIST-01: Application history list with status tags (Applied / Interviewing / Offer / Rejected)
-- [ ] HIST-02: Full saved state per analysis (score, action items, keyword gaps, accepted rewrites, interview Q+A)
-- [ ] HIST-03: Stored resume + JD inputs with re-run capability from saved application
+- ✓ AUTH-01: Google OAuth sign-in — v1.1
+- ✓ AUTH-02: Email/password sign-in and registration — v1.1
+- ✓ AUTH-03: Sign out — v1.1
+- ✓ AUTH-04: /history requires authentication — v1.1
+- ✓ AUTH-05: Analysis requires authentication — v1.1
+- ✓ AUTH-06: Session persists across browser refresh — v1.1
+- ✓ DATA-01: Neon Postgres + Drizzle ORM — v1.1
+- ✓ DATA-02: Schema covers users, applications, analysis/interview JSONB — v1.1
+- ✓ DATA-03: Resume text and JD text stored per record for re-run — v1.1
+- ✓ SAVE-01: Analysis auto-saved on SSE completion — v1.1
+- ✓ SAVE-02: Job title and company auto-extracted and stored — v1.1
+- ✓ SAVE-03: Interview prep merged into same application record — v1.1
+- ✓ HIST-01: History list with company, role, score, status, date — v1.1
+- ✓ HIST-02: Status update (Saved/Applied/Interviewing/Offer/Rejected) — v1.1
+- ✓ HIST-03: Detail page with read-only analysis — v1.1
+- ✓ HIST-04: Saved interview Q+A visible on detail page — v1.1
+- ✓ HIST-05: Re-run from saved application — v1.1
+- ✓ HIST-EDIT-01: Inline company name editing on detail page — v1.1
+- ✓ HIST-EDIT-02: Inline job title editing on detail page — v1.1
+- ✓ HIST-INTV-01: Inline interview prep trigger from detail page — v1.1
+- ✓ HIST-WORKFLOW-01: Expired session → /sign-in redirect — v1.1
+- ✓ HIST-WORKFLOW-02: Save failure visible as Alert (not console.warn) — v1.1
+
+### Active (v1.2 — TBD)
+
+*Define with `/gsd:new-milestone`*
 
 ### v2 Requirements
 
@@ -61,6 +79,9 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 - **INTV-V2-01**: Resume-grounded answer coaching — suggested answers drawn from the user's own experience
 - **INTV-V2-02**: Mock Q&A practice mode — interactive back-and-forth with feedback on user answers
 - **RESIN-V2-01**: Upload Word (.docx) resume in addition to PDF
+- **HIST-V2-01**: Score trend chart per application
+- **HIST-V2-02**: Notes field per application
+- **HIST-V2-03**: Delete saved application from history
 
 ### Out of Scope
 
@@ -73,6 +94,10 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 | Mobile app | Web-first; mobile later |
 | ATS submission | Out of scope; separate product domain |
 | Keyword stuffing mode | Anti-feature; backfires with modern screening systems |
+| Shared analysis links | Requires signed URL or public access control — v2+ |
+| Kanban board view | List + status badges is sufficient for v1.x |
+| Multiple resume versions per application | Adds schema complexity without core value in v1.x |
+| Export to PDF / download | Deferred; not part of history use-case |
 
 ## Key Decisions
 
@@ -81,24 +106,27 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 | Next.js 16 App Router | Streaming-first; RSC; Vercel-native | ✓ Correct — no issues |
 | Route Handlers not Server Actions | Server Actions: 1 MB limit, no streaming | ✓ Correct — SSE works cleanly |
 | unpdf (not raw pdfjs-dist) | Raw pdfjs-dist causes Next.js build failures | ✓ Correct — no build issues |
-| Stateless v1 — no auth, no DB | Validates demand before adding auth complexity | ✓ Correct — demo-quality feel |
+| Stateless v1 — no auth, no DB | Validates demand before adding auth complexity | ✓ Correct — clean migration |
 | Score rubric hardcoded in system prompt | Prevents model renegotiation of scoring weights | ✓ Correct — consistent scores |
-| zodOutputFormat single-arg | SDK helper takes one arg only — plan's second 'name' arg doesn't exist | ✓ Fixed during execution |
+| zodOutputFormat single-arg | SDK helper takes one arg only | ✓ Fixed during execution |
 | Zod v4 .issues not .errors | .errors doesn't exist in Zod v4 | ✓ Caught in research |
 | runtime = nodejs (not edge) | Edge runtime: 30s timeout; Node.js: 60s — needed for LLM streaming | ✓ Correct |
 | UUID cookie for rate limiting | 24hr TTL — stateless rate limit + migration path to accounts | ✓ Correct |
 | Upstash dynamic import | Avoids Edge errors when env vars absent at init | ✓ Correct |
 | Inline style for progress bar width | Dynamic Tailwind classes purged at build time | ✓ Caught during execution |
-| diff.tsx extension (not .ts) | JSX requires .tsx; import path unchanged | ✓ Caught during execution |
 | page.tsx as 'use client' | Simplest path for shared state across Phase 2 interactive components | ✓ Acceptable tradeoff |
 | claude-sonnet-4-6 for question generation | Sonnet-tier needed for JD-grounded structured output | ✓ Correct |
 | claude-haiku-4-5-20251001 for critique | Haiku-tier sufficient for free-text coaching; cheaper | ✓ Correct |
-| rationale field in InterviewQuestionSchema | Primary enforcement mechanism for JD grounding — forces model to justify each question | ✓ Correct |
-| submitCritique(index, draftAnswer) parameter | Avoids stale closure reading state.questions[i].draftAnswer | ✓ Correct |
+| better-auth over next-auth | next-auth has blocking peer dep conflict with Next.js 16 | ✓ Correct |
+| @neondatabase/serverless | @vercel/postgres discontinued Dec 2024; Neon HTTP stateless-correct | ✓ Correct |
+| JWT sessions (not DB sessions) | Single-user tool; no server-side revocation needed | ✓ Correct |
+| JSONB for analysis/interview data | Maps to existing Zod types; zero migration risk as prompts evolve | ✓ Correct |
+| verifySession() inline (not HOC wrapper) | HOC breaks ReadableStream (Auth.js #12485) | ✓ Critical catch |
+| proxy.ts replaces middleware.ts | Next.js 16 hard requirement | ✓ Correct |
+| window.location.href for 401 redirect | SSE hooks have no router instance; hard navigation is correct | ✓ Correct |
 
 ## Constraints
 
-- **Scope v1.1**: Personal tool for one user initially; stateless session replaced with persisted analysis history
 - **AI dependency**: Claude API is the core engine for analysis, rewriting, and coaching
 - **Audience**: Demo quality must be high enough to impress; not throwaway prototype
 - **Cost**: Haiku for coaching (cheap), Sonnet for structured analysis and questions (accurate)
@@ -108,18 +136,11 @@ Tech stack: Next.js 16 App Router + TypeScript + Tailwind v4 + shadcn/ui. Anthro
 
 This document evolves at phase transitions and milestone boundaries.
 
-**After each phase transition** (via `/gsd-transition`):
-1. Requirements invalidated? → Move to Out of Scope with reason
-2. Requirements validated? → Move to Validated with phase reference
-3. New requirements emerged? → Add to Active
-4. Decisions to log? → Add to Key Decisions
-5. "What This Is" still accurate? → Update if drifted
-
 **After each milestone** (via `/gsd:complete-milestone`):
 1. Full review of all sections
 2. Core Value check — still the right priority?
 3. Audit Out of Scope — reasons still valid?
-4. Update Context with current state
+4. Update Current State
 
 ---
-*Last updated: 2026-05-25 — v1.1 milestone started*
+*Last updated: 2026-05-26 — v1.1 shipped*

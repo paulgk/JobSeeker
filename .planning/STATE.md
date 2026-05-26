@@ -1,22 +1,22 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Persistence & History
-status: complete
-stopped_at: Phase 8 complete — all 4 plans executed
-last_updated: "2026-05-26T13:30:00.000Z"
+milestone: v1.2
+milestone_name: TBD
+status: milestone_complete
+stopped_at: v1.1 milestone archived — ready for v1.2 planning
+last_updated: "2026-05-26T14:00:00.000Z"
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 19
-  completed_plans: 19
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State: JobSeeker
 
 **Last Updated:** 2026-05-26
-**Session:** Phase 8 complete — all history-enhancement plans executed
+**Session:** v1.1 milestone archived — ready for v1.2 planning
 
 ---
 
@@ -26,13 +26,13 @@ progress:
 
 **Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. v1.1 adds better-auth (Google OAuth), Neon Postgres via @neondatabase/serverless, and Drizzle ORM. Deploy to Vercel.
 
-**Current Focus:** v1.2 History Enhancements — COMPLETE
+**Current Focus:** v1.2 — TBD. Run `/gsd:new-milestone` to plan next milestone.
 
 ---
 
 ## Current Position
 
-Milestone v1.1 complete. All 4 phases (4–7) and 19 plans executed.
+Milestone v1.1 archived. 5 phases (4–8), 19 plans executed and shipped. Ready for v1.2 planning.
 
 ## Phase Summary
 
@@ -167,11 +167,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-26T13:30:00.000Z
-**Stopped at:** Phase 8 complete — all history-enhancements plans executed, build clean
+**Last session:** 2026-05-26T14:00:00.000Z
+**Stopped at:** v1.1 milestone archived — ROADMAP.md updated, PROJECT.md updated, REQUIREMENTS.md archived, git tag v1.1 created
 **Resume file:** None
 
-**Next action:** Run `/gsd:audit-milestone` to verify milestone completion, or begin v1.2 planning
+**Next action:** Run `/gsd:new-milestone` to plan v1.2
 
 ---
 

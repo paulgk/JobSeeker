@@ -6,7 +6,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — 3 phases, 15 plans (shipped 2026-05-25) → [Archive](.planning/milestones/v1.0-ROADMAP.md)
-- 🔄 **v1.1 Persistence & History** — 4 phases (Phases 4–7)
+- ✅ **v1.1 Persistence & History** — 5 phases (Phases 4–8), 19 plans (shipped 2026-05-26) → [Archive](.planning/milestones/v1.1-ROADMAP.md)
 
 ---
 
@@ -65,125 +65,82 @@
 
 ---
 
-## v1.1 Persistence & History
+<details>
+<summary>✅ v1.1 Persistence & History — SHIPPED 2026-05-26</summary>
 
-- [ ] **Phase 4: Auth Foundation** — Google OAuth + email/password via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
-- [x] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations (completed 2026-05-26)
-- [x] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction (completed 2026-05-26)
-- [x] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component (completed 2026-05-26)
+### Phase 4 — Auth Foundation
 
----
+**Goal:** Users can sign in with Google OAuth or email/password, stay signed in across sessions, and are blocked from /history without authentication.
 
-## Phase Details
+**Requirements:** AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06
 
-### Phase 4: Auth Foundation
-
-**Goal**: Users can sign in with Google OAuth or email/password, stay signed in across sessions, and are blocked from /history without authentication
-**Depends on**: Phase 3 (v1.0 complete)
-**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06
-**Success Criteria** (what must be TRUE):
-
-  1. User can click "Sign in with Google", complete the OAuth flow, and land back in the app as an authenticated user
-  2. User can register with email + password and sign in with those credentials on subsequent visits
-  3. User can sign out and is returned to a signed-out state
-  4. Unauthenticated user navigating to /history is redirected to the sign-in page
-  5. Authenticated user session survives a browser refresh without re-authenticating
-  6. Analysis run is blocked (returns 401) when the request carries no valid session
-
-**Plans**: 3 plans
-Plans:
+**Plans:**
 
 - [x] 04-01-PLAN.md — Auth infrastructure: proxy.ts rename + session guard, auth.ts (memory adapter), auth-client.ts, dal.ts, catch-all route, .env.example
-- [ ] 04-02-PLAN.md — Sign-in page: impeccable design + shadcn/ui implementation (email/password tabs + Google OAuth button)
+- [x] 04-02-PLAN.md — Sign-in page: impeccable design + shadcn/ui implementation (email/password tabs + Google OAuth button)
 - [x] 04-03-PLAN.md — SSE auth guards: verifySession() added to analyse, interview-questions, interview-critique route handlers
-
-**UI hint**: yes
 
 ---
 
-### Phase 5: Database Schema and DAL
+### Phase 5 — Database Schema and DAL
 
-**Goal**: A Neon Postgres database is provisioned, migrated, and accessible through a Data Access Layer that all subsequent phases consume
-**Depends on**: Phase 4
-**Requirements**: DATA-01, DATA-02, DATA-03
-**Success Criteria** (what must be TRUE):
+**Goal:** A Neon Postgres database is provisioned, migrated, and accessible through a Data Access Layer that all subsequent phases consume.
 
-  1. Running `drizzle-kit migrate` against DATABASE_URL_UNPOOLED applies the schema with no errors
-  2. dal.ts functions (verifySession, getApplications, getApplicationById, saveSnapshot, updateStatus) are importable and type-safe against the Drizzle schema
-  3. The schema stores resume text and JD text per snapshot row (required for re-run in Phase 7)
-  4. The applications table schema supports all five status values (Saved, Applied, Interviewing, Offer, Rejected)
+**Requirements:** DATA-01, DATA-02, DATA-03
 
-**Plans**: 3 plans
-Plans:
-**Wave 1**
+**Plans:**
 
 - [x] 05-01-PLAN.md — Schema foundation: db/schema.ts (applications + better-auth tables), db/index.ts (neon-http client), drizzle.config.ts, .env.example placeholders
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
 - [x] 05-02-PLAN.md — Provision Neon + run migration: human checkpoint for credentials, drizzle-kit generate + migrate, live-DB verification
 - [x] 05-03-PLAN.md — Adapter swap + DAL: memoryAdapter → drizzleAdapter in auth.ts, four typed CRUD functions in dal.ts with IDOR guards
 
 ---
 
-### Phase 6: Save After Analysis
+### Phase 6 — Save After Analysis
 
-**Goal**: Every completed analysis is automatically persisted to the database under the authenticated user's account
-**Depends on**: Phase 5
-**Requirements**: SAVE-01, SAVE-02, SAVE-03
-**Success Criteria** (what must be TRUE):
+**Goal:** Every completed analysis is automatically persisted to the database under the authenticated user's account.
 
-  1. After analysis SSE completes, the result is automatically saved without any user action — a new application record appears in the DB
-  2. Each saved application record includes a job title and company name extracted from the JD text
-  3. When interview prep completes, the Q+A data is merged into the existing application record (not a new record)
-  4. All three existing LLM route handlers (/api/analyse, /api/interview-questions, /api/interview-critique) return 401 when called without a valid session
+**Requirements:** SAVE-01, SAVE-02, SAVE-03
 
-**Plans**: 5 plans
-Plans:
-**Wave 1** *(run in parallel)*
+**Plans:**
 
 - [x] 06-01-PLAN.md — DAL + schemas + extraction helper: updateInterviewData() in dal.ts, save_error/applicationId schema extensions, new src/lib/extract-job-meta.ts
 - [x] 06-02-PLAN.md — Auth guard upgrade: capture userId from verifySession() in analyse and interview-questions routes; confirm critique route guard
-
-**Wave 2** *(blocked on Wave 1)*
-
 - [x] 06-03-PLAN.md — Analyse route save logic: extractJobMeta() + saveApplication() + applicationId in result event + save_error non-fatal path
 - [x] 06-04-PLAN.md — Client threading: use-analysis captures applicationId, AnalysisPanel onSaved/onAnalysisStart, page.tsx savedApplicationId state, InterviewPrepPanel prop, use-interview-prep fetch body
-
-**Wave 3** *(blocked on Wave 2)*
-
 - [x] 06-05-PLAN.md — Interview save: interview-questions route calls updateInterviewData() after result; full TypeScript verification
-
-**UI hint**: yes
 
 ---
 
-### Phase 7: History UI
+### Phase 7 — History UI
 
-**Goal**: Users can browse their saved applications, update application status, view the full saved analysis, and re-run analysis from any saved application
-**Depends on**: Phase 6
-**Requirements**: HIST-01, HIST-02, HIST-03, HIST-04, HIST-05
-**Success Criteria** (what must be TRUE):
+**Goal:** Users can browse their saved applications, update application status, view the full saved analysis, and re-run analysis from any saved application.
 
-  1. User sees a /history list showing company name, job title, match score, current status badge, and date for every saved application — list loads without deserializing JSONB blobs
-  2. User can change the status of any saved application (Saved / Applied / Interviewing / Offer / Rejected) and the change persists on refresh
-  3. User can open a saved application and see the full analysis (score breakdown, action items, keyword gaps, accepted rewrites) in read-only panels
-  4. User can see saved interview Q+A on the detail page when interview prep was run for that application
-  5. User can click "Re-run" on a saved application — the analysis form is pre-populated with the stored resume text and JD text and a new analysis runs
+**Requirements:** HIST-01, HIST-02, HIST-03, HIST-04, HIST-05
 
-**Plans**: 4 plans
-Plans:
-**Wave 1** *(run in parallel — no file overlap)*
+**Plans:**
 
 - [x] 07-01-PLAN.md — /history list page + AuthHeader + StatusSelect + shadcn select + DAL newest-first ordering
 - [x] 07-02-PLAN.md — PATCH /api/applications/[id]/status route (enum validation + DAL IDOR guard)
 - [x] 07-03-PLAN.md — Read-only display components (ScoreCardDisplay, ActionListDisplay, KeywordBadgesDisplay re-exports; RewriteDiffReadOnly and QuestionCardDisplay stripped of streaming/interactive code)
-
-**Wave 2** *(blocked on Wave 1)*
-
 - [x] 07-04-PLAN.md — /history/[id] detail page (Tabs + read-only panels), GET /api/applications/[id]/prefill, ResumePanel/JobDescriptionPanel initialValue prop, home page searchParams + use() + prefill fetch for Re-run
 
-**UI hint**: yes
+---
+
+### Phase 8 — History Enhancements
+
+**Goal:** Polish history UI with inline editing, inline interview prep trigger, and workflow bug fixes.
+
+**Requirements:** HIST-EDIT-01, HIST-EDIT-02, HIST-INTV-01, HIST-WORKFLOW-01, HIST-WORKFLOW-02
+
+**Plans:**
+
+- [x] 08-01-PLAN.md — Metadata edit backend: updateApplicationMeta() DAL function + PATCH /api/applications/[id]/metadata route
+- [x] 08-02-PLAN.md — Inline editing UI: EditableApplicationHeader (click-to-edit, auto-save), EditNeededBadge (amber), history list badge rendering
+- [x] 08-03-PLAN.md — InterviewPrepIsland: inline SSE interview prep from detail page, replaces "Go back" link empty state
+- [x] 08-04-PLAN.md — Workflow fixes: 401→/sign-in redirect in both SSE hooks, save_error Alert in AnalysisPanel
+
+</details>
 
 ---
 
@@ -195,9 +152,10 @@ Plans:
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
-| 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
-| 6 — Save After Analysis | v1.1 | 5/5 | Complete   | 2026-05-26 |
-| 7 — History UI | v1.1 | 4/4 | Complete   | 2026-05-26 |
+| 5 — Database Schema and DAL | v1.1 | 3/3 | ✅ Complete | 2026-05-26 |
+| 6 — Save After Analysis | v1.1 | 5/5 | ✅ Complete | 2026-05-26 |
+| 7 — History UI | v1.1 | 4/4 | ✅ Complete | 2026-05-26 |
+| 8 — History Enhancements | v1.1 | 4/4 | ✅ Complete | 2026-05-26 |
 
 ---
 
@@ -221,21 +179,26 @@ Plans:
 | AUTH-04 | Phase 4 | ✅ v1.1 |
 | AUTH-05 | Phase 4 | ✅ v1.1 |
 | AUTH-06 | Phase 4 | ✅ v1.1 |
-| DATA-01 | Phase 5 | Pending |
-| DATA-02 | Phase 5 | Pending |
-| DATA-03 | Phase 5 | Pending |
-| SAVE-01 | Phase 6 | Pending |
-| SAVE-02 | Phase 6 | Pending |
-| SAVE-03 | Phase 6 | Pending |
-| HIST-01 | Phase 7 | Pending |
-| HIST-02 | Phase 7 | Pending |
-| HIST-03 | Phase 7 | Pending |
-| HIST-04 | Phase 7 | Pending |
-| HIST-05 | Phase 7 | Pending |
+| DATA-01 | Phase 5 | ✅ v1.1 |
+| DATA-02 | Phase 5 | ✅ v1.1 |
+| DATA-03 | Phase 5 | ✅ v1.1 |
+| SAVE-01 | Phase 6 | ✅ v1.1 |
+| SAVE-02 | Phase 6 | ✅ v1.1 |
+| SAVE-03 | Phase 6 | ✅ v1.1 |
+| HIST-01 | Phase 7 | ✅ v1.1 |
+| HIST-02 | Phase 7 | ✅ v1.1 |
+| HIST-03 | Phase 7 | ✅ v1.1 |
+| HIST-04 | Phase 7 | ✅ v1.1 |
+| HIST-05 | Phase 7 | ✅ v1.1 |
+| HIST-EDIT-01 | Phase 8 | ✅ v1.1 |
+| HIST-EDIT-02 | Phase 8 | ✅ v1.1 |
+| HIST-INTV-01 | Phase 8 | ✅ v1.1 |
+| HIST-WORKFLOW-01 | Phase 8 | ✅ v1.1 |
+| HIST-WORKFLOW-02 | Phase 8 | ✅ v1.1 |
 
 **v1.0 requirements: 10 total. Covered: 10. Orphans: 0.**
-**v1.1 requirements: 16 total. Covered: 16. Orphans: 0.**
+**v1.1 requirements: 22 total (17 planned + 5 Phase 8 bonus). Covered: 22. Orphans: 0.**
 
 ---
 
-*Created: 2026-05-22 | Last updated: 2026-05-26 — Phase 7 plans added (07-01 through 07-04)*
+*Created: 2026-05-22 | Last updated: 2026-05-26 — v1.1 complete, Phase 8 bonus scope added*
