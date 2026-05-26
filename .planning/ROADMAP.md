@@ -176,7 +176,7 @@ Plans:
 **Wave 1** *(run in parallel — no file overlap)*
 
 - [x] 07-01-PLAN.md — /history list page + AuthHeader + StatusSelect + shadcn select + DAL newest-first ordering
-- [ ] 07-02-PLAN.md — PATCH /api/applications/[id]/status route (enum validation + DAL IDOR guard)
+- [x] 07-02-PLAN.md — PATCH /api/applications/[id]/status route (enum validation + DAL IDOR guard)
 - [ ] 07-03-PLAN.md — Read-only display components (ScoreCardDisplay, ActionListDisplay, KeywordBadgesDisplay re-exports; RewriteDiffReadOnly and QuestionCardDisplay stripped of streaming/interactive code)
 
 **Wave 2** *(blocked on Wave 1)*
@@ -197,7 +197,7 @@ Plans:
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
 | 6 — Save After Analysis | v1.1 | 5/5 | Complete   | 2026-05-26 |
-| 7 — History UI | v1.1 | 1/4 | In Progress|  |
+| 7 — History UI | v1.1 | 2/4 | In Progress|  |
 
 ---
 
