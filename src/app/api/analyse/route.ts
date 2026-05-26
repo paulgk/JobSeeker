@@ -3,7 +3,8 @@ import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod'
 import { NextRequest } from 'next/server'
 import { AnalyseRequestSchema, AnalysisResultSchema, type AnalysisResult } from '@/lib/schemas'
 import { SYSTEM_PROMPT, buildUserPrompt } from '@/lib/analysis-prompt'
-import { verifySession } from '@/lib/dal'
+import { verifySession, saveApplication } from '@/lib/dal'
+import { extractJobMeta } from '@/lib/extract-job-meta'
 
 export const dynamic = 'force-dynamic' // Prevent Next.js/Vercel CDN caching of SSE route
 export const runtime = 'nodejs' // Node runtime for 60s timeout (not Edge's 10s)
@@ -78,7 +79,26 @@ export async function POST(request: NextRequest) {
         const result = await callWithRetry(userPrompt, (text) => {
           controller.enqueue(sseEvent({ type: 'chunk', content: text }))
         })
-        controller.enqueue(sseEvent({ type: 'result', data: result }))
+
+        // Attempt to save — nested try/catch so save failure is non-fatal (per D-06)
+        let applicationId: string | undefined
+        try {
+          const { jobTitle, company } = await extractJobMeta(parsed.data.jdText)
+          applicationId = await saveApplication(userId, {
+            jobTitle,
+            company,
+            resumeText: parsed.data.resumeText,
+            jdText: parsed.data.jdText,
+            matchScore: result.overallScore,
+            analysisData: result,
+          })
+        } catch (saveErr) {
+          const saveMessage = saveErr instanceof Error ? saveErr.message : 'Could not save to history'
+          controller.enqueue(sseEvent({ type: 'save_error', message: saveMessage }))
+        }
+
+        // Emit result with applicationId (undefined if save failed — client handles null case)
+        controller.enqueue(sseEvent({ type: 'result', data: result, applicationId }))
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Analysis failed'
         controller.enqueue(sseEvent({ type: 'error', message }))
