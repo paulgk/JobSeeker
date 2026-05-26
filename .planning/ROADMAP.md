@@ -68,7 +68,7 @@
 ## v1.1 Persistence & History
 
 - [ ] **Phase 4: Auth Foundation** — Google OAuth + email/password via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
-- [ ] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations
+- [x] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations (completed 2026-05-26)
 - [ ] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction
 - [ ] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component
 
@@ -121,8 +121,8 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 05-02-PLAN.md — Provision Neon + run migration: human checkpoint for credentials, drizzle-kit generate + migrate, live-DB verification
-- [ ] 05-03-PLAN.md — Adapter swap + DAL: memoryAdapter → drizzleAdapter in auth.ts, four typed CRUD functions in dal.ts with IDOR guards
+- [x] 05-02-PLAN.md — Provision Neon + run migration: human checkpoint for credentials, drizzle-kit generate + migrate, live-DB verification
+- [x] 05-03-PLAN.md — Adapter swap + DAL: memoryAdapter → drizzleAdapter in auth.ts, four typed CRUD functions in dal.ts with IDOR guards
 
 ---
 
@@ -169,7 +169,7 @@ Plans:
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
-| 5 — Database Schema and DAL | v1.1 | 1/3 | In Progress|  |
+| 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
 | 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
 
