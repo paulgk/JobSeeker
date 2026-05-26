@@ -56,9 +56,11 @@ All sizes established by existing components. Phase 7 inherits without deviation
 | Body | 14px (text-sm) | 400 (regular) | 1.5 (leading-relaxed) | List row metadata, detail panel prose |
 | Label | 16px (text-base) | 600 (semibold) | 1.4 | Card subheadings, column labels |
 | Heading | 20px (text-xl) | 600 (semibold) | 1.2 (tracking-tight) | Section headings (h2) in detail page panels |
-| Display | 24px (text-2xl) | 700 (bold) | 1.1 (tracking-tight) | Page-level h1 in AuthHeader and /history page |
+| Display | 24px (text-2xl) | 600 (semibold) | 1.1 (tracking-tight) | Page-level h1 in AuthHeader and /history page |
 
-Source: `score-card.tsx` (`text-xl font-semibold tracking-tight`), `page.tsx` (`text-2xl font-bold tracking-tight`), `action-list.tsx` (`text-sm`).
+Weight scale: 400 (regular) / 600 (semibold) — two weights only.
+
+Source: `score-card.tsx` (`text-xl font-semibold tracking-tight`), `page.tsx` (`text-2xl font-semibold tracking-tight`), `action-list.tsx` (`text-sm`).
 
 ---
 
@@ -165,6 +167,8 @@ h1: "My Applications"
 - Row list: `space-y-3` vertical gap
 - Page max-width: `max-w-4xl mx-auto px-6 py-8` — narrower than home (list benefits from focused column)
 
+**Focal Point:** The h1 "My Applications" headline draws the eye first; the application card list below it is the primary visual anchor. Users scan vertically down the card stack — company name (label weight) acts as the leftmost anchor per row.
+
 ### /history/[id] Detail Page
 
 ```
@@ -193,6 +197,8 @@ Company name / Job title                [Status select]  [Re-run Analysis button
 - Tabs default to "Analysis" tab
 - "Interview Prep" tab shows only when `interviewData` is non-null on the application record; otherwise show tab with empty state (not hidden — HIST-04 requires it to be visible)
 - Re-run button: navigates to `/?applicationId={id}` — page.tsx reads query param, pre-populates resumeText + jdText from DB, sets `analysing=false` so user can confirm before running
+
+**Focal Point:** The company name / job title heading (Display 24px, semibold) is the visual anchor. The "Re-run Analysis" button (accent color, right-aligned in the header row) is the primary interactive anchor — it is the only accent-colored element on the page above the fold.
 
 ---
 
