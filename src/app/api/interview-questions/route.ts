@@ -7,7 +7,7 @@ import {
   type InterviewPrepResult,
 } from '@/lib/schemas'
 import { QUESTIONS_SYSTEM_PROMPT, buildQuestionsPrompt } from '@/lib/interview-prompt'
-import { verifySession } from '@/lib/dal'
+import { verifySession, updateInterviewData } from '@/lib/dal'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -83,7 +83,17 @@ export async function POST(request: NextRequest) {
           controller.enqueue(sseEvent({ type: 'chunk', content: text }))
         })
         controller.enqueue(sseEvent({ type: 'result', data: result }))
-      } catch (err) {
+
+      // Merge interview data into the existing application record — non-fatal if missing/failed
+      if (parsed.data.applicationId) {
+        try {
+          await updateInterviewData(userId, parsed.data.applicationId, result)
+        } catch {
+          // Merge failed — log but do not kill the SSE stream
+          // The Q+A result is already in the client state; only history persistence is affected
+        }
+      }
+    } catch (err) {
         const message = err instanceof Error ? err.message : 'Question generation failed'
         controller.enqueue(sseEvent({ type: 'error', message }))
       } finally {
