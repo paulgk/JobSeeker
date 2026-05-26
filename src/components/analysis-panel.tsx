@@ -14,15 +14,25 @@ interface AnalysisPanelProps {
   resumeText: string
   jdText: string
   onInterviewPrepReady?: () => void
+  onSaved?: (applicationId: string) => void
+  onAnalysisStart?: () => void
 }
 
-export function AnalysisPanel({ resumeText, jdText, onInterviewPrepReady }: AnalysisPanelProps) {
+export function AnalysisPanel({ resumeText, jdText, onInterviewPrepReady, onSaved, onAnalysisStart }: AnalysisPanelProps) {
   const { state, start, acceptRewrite, rejectRewrite } = useAnalysis()
 
   useEffect(() => {
+    onAnalysisStart?.()
     start(resumeText, jdText)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (state.phase === 'done' && state.applicationId) {
+      onSaved?.(state.applicationId)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase === 'done' ? state.applicationId : undefined])
 
   if (state.phase === 'streaming') {
     return (
@@ -91,7 +101,7 @@ export function AnalysisPanel({ resumeText, jdText, onInterviewPrepReady }: Anal
             Prepare for interview
           </Button>
         )}
-        <Button variant="ghost" className="text-muted-foreground" onClick={() => start(resumeText, jdText)}>
+        <Button variant="ghost" className="text-muted-foreground" onClick={() => { onAnalysisStart?.(); start(resumeText, jdText) }}>
           Run again
         </Button>
       </div>
