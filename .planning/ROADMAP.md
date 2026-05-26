@@ -171,7 +171,18 @@ Plans:
   4. User can see saved interview Q+A on the detail page when interview prep was run for that application
   5. User can click "Re-run" on a saved application — the analysis form is pre-populated with the stored resume text and JD text and a new analysis runs
 
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+**Wave 1** *(run in parallel — no file overlap)*
+
+- [ ] 07-01-PLAN.md — /history list page + AuthHeader + StatusSelect + shadcn select + DAL newest-first ordering
+- [ ] 07-02-PLAN.md — PATCH /api/applications/[id]/status route (enum validation + DAL IDOR guard)
+- [ ] 07-03-PLAN.md — Read-only display components (ScoreCardDisplay, ActionListDisplay, KeywordBadgesDisplay re-exports; RewriteDiffReadOnly and QuestionCardDisplay stripped of streaming/interactive code)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 07-04-PLAN.md — /history/[id] detail page (Tabs + read-only panels), GET /api/applications/[id]/prefill, ResumePanel/JobDescriptionPanel initialValue prop, home page searchParams + use() + prefill fetch for Re-run
+
 **UI hint**: yes
 
 ---
@@ -186,7 +197,7 @@ Plans:
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
 | 6 — Save After Analysis | v1.1 | 5/5 | Complete   | 2026-05-26 |
-| 7 — History UI | v1.1 | 0/? | Not started | — |
+| 7 — History UI | v1.1 | 0/4 | Not started | — |
 
 ---
 
@@ -227,4 +238,4 @@ Plans:
 
 ---
 
-*Created: 2026-05-22 | Last updated: 2026-05-26 — Phase 6 plans added (06-01 through 06-05)*
+*Created: 2026-05-22 | Last updated: 2026-05-26 — Phase 7 plans added (07-01 through 07-04)*
