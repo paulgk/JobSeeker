@@ -15,7 +15,7 @@ export type RewriteState = {
 export type AnalysisState =
   | { phase: 'idle' }
   | { phase: 'streaming'; progress: string }
-  | { phase: 'done'; result: AnalysisResult; rewrites: RewriteState[] }
+  | { phase: 'done'; result: AnalysisResult; rewrites: RewriteState[]; applicationId?: string }
   | { phase: 'error'; message: string }
 
 // ── Reducer ──────────────────────────────────────────────────────────────────
@@ -23,7 +23,7 @@ export type AnalysisState =
 type Action =
   | { type: 'STREAM_START' }
   | { type: 'CHUNK'; content: string }
-  | { type: 'RESULT'; data: AnalysisResult }
+  | { type: 'RESULT'; data: AnalysisResult; applicationId?: string }
   | { type: 'ERROR'; message: string }
   | { type: 'ACCEPT_REWRITE'; index: number }
   | { type: 'REJECT_REWRITE'; index: number }
@@ -42,6 +42,7 @@ function reducer(state: AnalysisState, action: Action): AnalysisState {
         phase: 'done',
         result: action.data,
         rewrites: action.data.rewrites.map((section) => ({ status: 'pending', section })),
+        applicationId: action.applicationId,
       }
 
     case 'ERROR':
@@ -107,7 +108,7 @@ export function useAnalysis() {
       buffer = lines.pop() ?? ''
       for (const line of lines) {
         if (!line.startsWith('data: ')) continue
-        let event: { type: string; content?: string; data?: AnalysisResult; message?: string }
+        let event: { type: string; content?: string; data?: AnalysisResult; message?: string; applicationId?: string }
         try {
           event = JSON.parse(line.slice(6))
         } catch {
@@ -117,10 +118,15 @@ export function useAnalysis() {
           dispatch({ type: 'CHUNK', content: event.content })
         }
         if (event.type === 'result' && event.data !== undefined) {
-          dispatch({ type: 'RESULT', data: event.data })
+          dispatch({ type: 'RESULT', data: event.data, applicationId: event.applicationId })
         }
         if (event.type === 'error' && event.message !== undefined) {
           dispatch({ type: 'ERROR', message: event.message })
+        }
+        if (event.type === 'save_error' && event.message !== undefined) {
+          // save_error is non-fatal — analysis result is still in done state
+          // Future: dispatch a SAVE_ERROR action to show a banner. For Phase 6, log only.
+          console.warn('Analysis save failed:', event.message)
         }
       }
     }
