@@ -117,7 +117,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 05-01-PLAN.md — Schema foundation: db/schema.ts (applications + better-auth tables), db/index.ts (neon-http client), drizzle.config.ts, .env.example placeholders
+- [x] 05-01-PLAN.md — Schema foundation: db/schema.ts (applications + better-auth tables), db/index.ts (neon-http client), drizzle.config.ts, .env.example placeholders
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -169,7 +169,7 @@ Plans:
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
-| 5 — Database Schema and DAL | v1.1 | 0/3 | Not started | — |
+| 5 — Database Schema and DAL | v1.1 | 1/3 | In Progress|  |
 | 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
 

@@ -4,8 +4,8 @@ milestone: v1.1
 milestone_name: Persistence & History
 status: executing
 stopped_at: Phase 5 context gathered
-last_updated: "2026-05-26T00:55:03.513Z"
-last_activity: 2026-05-26 -- Phase 05 planning complete
+last_updated: "2026-05-26T02:04:26.162Z"
+last_activity: 2026-05-26 -- Phase 05 execution started
 progress:
   total_phases: 4
   completed_phases: 1
@@ -27,16 +27,16 @@ progress:
 
 **Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. v1.1 adds better-auth (Google OAuth), Neon Postgres via @neondatabase/serverless, and Drizzle ORM. Deploy to Vercel.
 
-**Current Focus:** v1.1 — Persistence & History
+**Current Focus:** Phase 05 — database-schema-and-dal
 
 ---
 
 ## Current Position
 
-Phase: 4 — Auth Foundation
-Plan: All 3 complete (04-01, 04-02, 04-03)
-Status: Ready to execute
-Last activity: 2026-05-26 -- Phase 05 planning complete
+Phase: 05 (database-schema-and-dal) — EXECUTING
+Plan: 1 of 3
+Status: Executing Phase 05
+Last activity: 2026-05-26 -- Phase 05 execution started
 
 ## Phase Summary
 
