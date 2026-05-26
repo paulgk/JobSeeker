@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { AuthHeader } from '@/components/auth-header'
 import { StatusSelect } from '@/components/status-select'
 import { Badge } from '@/components/ui/badge'
+import { EditNeededBadge } from '@/components/edit-needed-badge'
 import type { ApplicationStatus } from '@/lib/db/schema'
 
 const STATUS_VARIANT: Record<ApplicationStatus, 'default' | 'secondary' | 'outline' | 'destructive'> = {
@@ -62,12 +63,18 @@ export default async function HistoryPage() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex-1 min-w-0">
-                      <span className="text-base font-semibold text-foreground truncate block">
-                        {app.company}
-                      </span>
-                      <span className="text-sm text-muted-foreground truncate block">
-                        {app.jobTitle}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-base font-semibold text-foreground truncate block">
+                          {app.company}
+                        </span>
+                        {app.company === 'Unknown Company' && <EditNeededBadge />}
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm text-muted-foreground truncate block">
+                          {app.jobTitle}
+                        </span>
+                        {app.jobTitle === 'Unknown Role' && <EditNeededBadge />}
+                      </div>
                     </div>
                     <span
                       className="text-sm font-semibold tabular-nums"

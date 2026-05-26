@@ -11,6 +11,7 @@ import { ActionListDisplay } from '@/components/action-list-display'
 import { KeywordBadgesDisplay } from '@/components/keyword-badges-display'
 import { RewriteDiffReadOnly } from '@/components/rewrite-diff-readonly'
 import { QuestionCardDisplay } from '@/components/question-card-display'
+import { EditableApplicationHeader } from '@/components/editable-application-header'
 import type { ApplicationStatus } from '@/lib/db/schema'
 
 const STATUS_VARIANT: Record<ApplicationStatus, 'default' | 'secondary' | 'outline' | 'destructive'> = {
@@ -45,8 +46,11 @@ export default async function DetailPage({ params }: { params: Promise<{ id: str
 
         <div className="flex items-start justify-between gap-4 mb-8">
           <div className="min-w-0">
-            <h1 className="text-2xl font-semibold tracking-tight text-foreground truncate">{app.company}</h1>
-            <p className="text-base text-muted-foreground truncate mt-1">{app.jobTitle}</p>
+            <EditableApplicationHeader
+              id={app.id}
+              initialCompany={app.company}
+              initialJobTitle={app.jobTitle}
+            />
             <div className="mt-3 flex items-center gap-3">
               <Badge variant={STATUS_VARIANT[app.status]}>{STATUS_LABELS[app.status]}</Badge>
               <StatusSelect id={app.id} initialStatus={app.status} />
