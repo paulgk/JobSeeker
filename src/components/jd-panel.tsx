@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -10,15 +10,26 @@ import { TextPreview } from '@/components/text-preview'
 interface JobDescriptionPanelProps {
   onReady?: (text: string) => void
   locked?: boolean
+  initialValue?: string
 }
 
-export function JobDescriptionPanel({ onReady, locked }: JobDescriptionPanelProps) {
+export function JobDescriptionPanel({ onReady, locked, initialValue }: JobDescriptionPanelProps) {
   const [tab, setTab] = useState<'paste' | 'url'>('paste')
   const [pasteText, setPasteText] = useState('')
   const [urlInput, setUrlInput] = useState('')
   const [extractedText, setExtractedText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!initialValue) return
+    setTab('paste')
+    setPasteText(initialValue)
+    setExtractedText(initialValue)
+    setError(null)
+    onReady?.(initialValue)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValue])
 
   function handleTabChange(value: string) {
     if (locked) return
