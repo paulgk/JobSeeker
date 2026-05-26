@@ -68,7 +68,8 @@ export type AnalysisResult = z.infer<typeof AnalysisResultSchema>
 export const AnalyseResponseEventSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('start') }),
   z.object({ type: z.literal('chunk'), content: z.string() }),
-  z.object({ type: z.literal('result'), data: AnalysisResultSchema }),
+  z.object({ type: z.literal('result'), data: AnalysisResultSchema, applicationId: z.string().optional() }),
+  z.object({ type: z.literal('save_error'), message: z.string() }),
   z.object({ type: z.literal('error'), message: z.string() }),
   z.object({ type: z.literal('done') }),
 ])
@@ -89,6 +90,7 @@ export type ApiError = z.infer<typeof ApiErrorSchema>
 export const InterviewQuestionsRequestSchema = z.object({
   resumeText: z.string().min(200, 'Resume must be at least 200 characters'),
   jdText: z.string().min(50, 'Job description must be at least 50 characters'),
+  applicationId: z.string().optional(),
 })
 export type InterviewQuestionsRequest = z.infer<typeof InterviewQuestionsRequestSchema>
 
