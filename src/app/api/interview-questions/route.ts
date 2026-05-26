@@ -49,8 +49,10 @@ async function callWithRetry(
 
 export async function POST(request: NextRequest) {
   // Auth guard — must be inline (HOC wrappers break ReadableStream SSE)
+  let userId: string
   try {
-    await verifySession()
+    const session = await verifySession()
+    userId = session.userId
   } catch {
     return new Response(null, { status: 401 })
   }
