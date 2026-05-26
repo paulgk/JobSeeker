@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { cache } from 'react'
 import { db } from '@/lib/db'
 import { applications } from '@/lib/db/schema'
-import { eq, and } from 'drizzle-orm'
+import { eq, and, desc } from 'drizzle-orm'
 import type { ApplicationStatus } from '@/lib/db/schema'
 import type { AnalysisResult, InterviewPrepResult } from '@/lib/schemas'
 
@@ -38,7 +38,7 @@ export async function getApplications(userId: string) {
     })
     .from(applications)
     .where(eq(applications.userId, userId))
-    .orderBy(applications.createdAt)
+    .orderBy(desc(applications.createdAt))
 }
 
 export const getApplicationById = cache(async (userId: string, id: string) => {
