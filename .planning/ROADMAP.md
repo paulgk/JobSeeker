@@ -138,7 +138,22 @@ Plans:
   3. When interview prep completes, the Q+A data is merged into the existing application record (not a new record)
   4. All three existing LLM route handlers (/api/analyse, /api/interview-questions, /api/interview-critique) return 401 when called without a valid session
 
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+**Wave 1** *(run in parallel)*
+
+- [ ] 06-01-PLAN.md — DAL + schemas + extraction helper: updateInterviewData() in dal.ts, save_error/applicationId schema extensions, new src/lib/extract-job-meta.ts
+- [ ] 06-02-PLAN.md — Auth guard upgrade: capture userId from verifySession() in analyse and interview-questions routes; confirm critique route guard
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 06-03-PLAN.md — Analyse route save logic: extractJobMeta() + saveApplication() + applicationId in result event + save_error non-fatal path
+- [ ] 06-04-PLAN.md — Client threading: use-analysis captures applicationId, AnalysisPanel onSaved/onAnalysisStart, page.tsx savedApplicationId state, InterviewPrepPanel prop, use-interview-prep fetch body
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 06-05-PLAN.md — Interview save: interview-questions route calls updateInterviewData() after result; full TypeScript verification
+
 **UI hint**: yes
 
 ---
@@ -170,7 +185,7 @@ Plans:
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
-| 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
+| 6 — Save After Analysis | v1.1 | 0/5 | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
 
 ---
@@ -212,4 +227,4 @@ Plans:
 
 ---
 
-*Created: 2026-05-22 | Last updated: 2026-05-26 — Phase 5 plans added (05-01, 05-02, 05-03)*
+*Created: 2026-05-22 | Last updated: 2026-05-26 — Phase 6 plans added (06-01 through 06-05)*
