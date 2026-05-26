@@ -15,7 +15,7 @@ export type RewriteState = {
 export type AnalysisState =
   | { phase: 'idle' }
   | { phase: 'streaming'; progress: string }
-  | { phase: 'done'; result: AnalysisResult; rewrites: RewriteState[]; applicationId?: string }
+  | { phase: 'done'; result: AnalysisResult; rewrites: RewriteState[]; applicationId?: string; saveError?: string }
   | { phase: 'error'; message: string }
 
 // ── Reducer ──────────────────────────────────────────────────────────────────
@@ -27,6 +27,7 @@ type Action =
   | { type: 'ERROR'; message: string }
   | { type: 'ACCEPT_REWRITE'; index: number }
   | { type: 'REJECT_REWRITE'; index: number }
+  | { type: 'SAVE_ERROR'; message: string }
 
 function reducer(state: AnalysisState, action: Action): AnalysisState {
   switch (action.type) {
@@ -66,6 +67,10 @@ function reducer(state: AnalysisState, action: Action): AnalysisState {
         ),
       }
 
+    case 'SAVE_ERROR':
+      if (state.phase !== 'done') return state
+      return { ...state, saveError: action.message }
+
     default:
       return state
   }
@@ -88,6 +93,11 @@ export function useAnalysis() {
       })
     } catch {
       dispatch({ type: 'ERROR', message: 'Network error — could not connect' })
+      return
+    }
+
+    if (res.status === 401) {
+      window.location.href = '/sign-in'
       return
     }
 
@@ -124,9 +134,7 @@ export function useAnalysis() {
           dispatch({ type: 'ERROR', message: event.message })
         }
         if (event.type === 'save_error' && event.message !== undefined) {
-          // save_error is non-fatal — analysis result is still in done state
-          // Future: dispatch a SAVE_ERROR action to show a banner. For Phase 6, log only.
-          console.warn('Analysis save failed:', event.message)
+          dispatch({ type: 'SAVE_ERROR', message: event.message })
         }
       }
     }
