@@ -9,9 +9,10 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 interface InterviewPrepPanelProps {
   resumeText: string
   jdText: string
+  applicationId?: string
 }
 
-export function InterviewPrepPanel({ resumeText, jdText }: InterviewPrepPanelProps) {
+export function InterviewPrepPanel({ resumeText, jdText, applicationId }: InterviewPrepPanelProps) {
   const { state, startPrep, submitCritique, toggleExpand, setDraft } = useInterviewPrep()
 
   if (state.phase === 'idle') {
@@ -23,7 +24,7 @@ export function InterviewPrepPanel({ resumeText, jdText }: InterviewPrepPanelPro
         <p className="text-sm text-muted-foreground">
           Generate tailored interview questions based on your resume and the job description.
         </p>
-        <Button onClick={() => startPrep(resumeText, jdText)}>
+        <Button onClick={() => startPrep(resumeText, jdText, applicationId)}>
           Generate interview questions
         </Button>
       </div>

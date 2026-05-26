@@ -124,7 +124,7 @@ function reducer(state: PrepState, action: Action): PrepState {
 export function useInterviewPrep() {
   const [state, dispatch] = useReducer(reducer, { phase: 'idle' })
 
-  const startPrep = useCallback(async (resumeText: string, jdText: string) => {
+  const startPrep = useCallback(async (resumeText: string, jdText: string, applicationId?: string) => {
     dispatch({ type: 'STREAM_START' })
 
     let res: Response
@@ -132,7 +132,7 @@ export function useInterviewPrep() {
       res = await fetch('/api/interview-questions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resumeText, jdText }),
+        body: JSON.stringify({ resumeText, jdText, ...(applicationId ? { applicationId } : {}) }),
       })
     } catch {
       dispatch({ type: 'ERROR', message: 'Network error — could not connect' })

@@ -12,6 +12,7 @@ export default function HomePage() {
   const [jdText, setJdText] = useState('')
   const [analysing, setAnalysing] = useState(false)
   const [showInterviewPrep, setShowInterviewPrep] = useState(false)
+  const [savedApplicationId, setSavedApplicationId] = useState<string | null>(null)
 
   const bothReady = resumeText.length > 0 && jdText.length > 0
 
@@ -59,11 +60,17 @@ export default function HomePage() {
           resumeText={resumeText}
           jdText={jdText}
           onInterviewPrepReady={() => setShowInterviewPrep(true)}
+          onSaved={setSavedApplicationId}
+          onAnalysisStart={() => setSavedApplicationId(null)}
         />
       )}
 
       {showInterviewPrep && (
-        <InterviewPrepPanel resumeText={resumeText} jdText={jdText} />
+        <InterviewPrepPanel
+          resumeText={resumeText}
+          jdText={jdText}
+          applicationId={savedApplicationId ?? undefined}
+        />
       )}
     </main>
   )
