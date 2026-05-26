@@ -7,7 +7,7 @@ import { db } from '@/lib/db'
 import { applications } from '@/lib/db/schema'
 import { eq, and } from 'drizzle-orm'
 import type { ApplicationStatus } from '@/lib/db/schema'
-import type { AnalysisResult } from '@/lib/schemas'
+import type { AnalysisResult, InterviewPrepResult } from '@/lib/schemas'
 
 export type SaveApplicationInput = {
   jobTitle: string
@@ -67,6 +67,7 @@ export async function saveApplication(
       interviewData: null,
     })
     .returning({ id: applications.id })
+  if (!row) throw new Error('saveApplication: INSERT did not return a row')
   return row.id
 }
 
@@ -78,5 +79,16 @@ export async function updateApplicationStatus(
   await db
     .update(applications)
     .set({ status, updatedAt: new Date() })
+    .where(and(eq(applications.id, id), eq(applications.userId, userId)))
+}
+
+export async function updateInterviewData(
+  userId: string,
+  id: string,
+  interviewData: InterviewPrepResult
+): Promise<void> {
+  await db
+    .update(applications)
+    .set({ interviewData, updatedAt: new Date() })
     .where(and(eq(applications.id, id), eq(applications.userId, userId)))
 }
