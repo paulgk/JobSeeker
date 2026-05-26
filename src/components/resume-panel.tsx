@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -10,9 +10,10 @@ import { TextPreview } from '@/components/text-preview'
 interface ResumePanelProps {
   onReady?: (text: string) => void
   locked?: boolean
+  initialValue?: string
 }
 
-export function ResumePanel({ onReady, locked }: ResumePanelProps) {
+export function ResumePanel({ onReady, locked, initialValue }: ResumePanelProps) {
   const [tab, setTab] = useState<'upload' | 'paste'>('upload')
   const [pasteText, setPasteText] = useState('')
   const [extractedText, setExtractedText] = useState('')
@@ -21,6 +22,16 @@ export function ResumePanel({ onReady, locked }: ResumePanelProps) {
   const [fileName, setFileName] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (!initialValue) return
+    setTab('paste')
+    setPasteText(initialValue)
+    setExtractedText(initialValue)
+    setError(null)
+    onReady?.(initialValue)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValue])
 
   async function processFile(file: File) {
     setError(null)
