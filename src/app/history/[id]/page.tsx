@@ -11,6 +11,7 @@ import { ActionListDisplay } from '@/components/action-list-display'
 import { KeywordBadgesDisplay } from '@/components/keyword-badges-display'
 import { RewriteDiffReadOnly } from '@/components/rewrite-diff-readonly'
 import { QuestionCardDisplay } from '@/components/question-card-display'
+import { InterviewPrepIsland } from '@/components/interview-prep-island'
 import { EditableApplicationHeader } from '@/components/editable-application-header'
 import type { ApplicationStatus } from '@/lib/db/schema'
 
@@ -91,10 +92,11 @@ export default async function DetailPage({ params }: { params: Promise<{ id: str
                 <QuestionCardDisplay key={i} question={q} index={i} />
               ))
             ) : (
-              <div className="rounded-2xl ring-1 ring-border bg-card p-10 text-center">
-                <p className="text-sm text-muted-foreground mb-3">Interview prep wasn&apos;t run for this application.</p>
-                <Link href="/" className="text-sm text-foreground hover:underline">Go back to run interview prep →</Link>
-              </div>
+              <InterviewPrepIsland
+                applicationId={app.id}
+                resumeText={app.resumeText}
+                jdText={app.jdText}
+              />
             )}
           </TabsContent>
         </Tabs>
