@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Persistence & History
 status: complete
-stopped_at: Phase 8 planned — 4 plans ready for execution
-last_updated: "2026-05-26T12:41:35.159Z"
+stopped_at: Phase 8 complete — all 4 plans executed
+last_updated: "2026-05-26T13:30:00.000Z"
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
+  total_phases: 5
+  completed_phases: 5
+  total_plans: 19
+  completed_plans: 19
   percent: 100
 ---
 
 # State: JobSeeker
 
-**Last Updated:** 2026-05-25
-**Session:** Roadmap created for v1.1 — Phases 4–7 defined
+**Last Updated:** 2026-05-26
+**Session:** Phase 8 complete — all history-enhancement plans executed
 
 ---
 
@@ -26,7 +26,7 @@ progress:
 
 **Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. v1.1 adds better-auth (Google OAuth), Neon Postgres via @neondatabase/serverless, and Drizzle ORM. Deploy to Vercel.
 
-**Current Focus:** v1.1 Persistence & History — COMPLETE
+**Current Focus:** v1.2 History Enhancements — COMPLETE
 
 ---
 
@@ -45,6 +45,7 @@ Milestone v1.1 complete. All 4 phases (4–7) and 19 plans executed.
 | 5 — Database Schema and DAL | Neon Postgres provisioned, Drizzle schema migrated, DAL operational | Complete |
 | 6 — Save After Analysis | Completed analysis is auto-saved; job title/company extracted; interview prep merged | Complete |
 | 7 — History UI | Users can browse, view, update status, and re-run saved applications | Complete |
+| 8 — History Enhancements | Inline editing, Edit-needed badge, inline interview prep, 401 redirect, save_error Alert | Complete |
 
 ---
 
@@ -145,6 +146,7 @@ None currently.
 
 ### Recent Activity
 
+- 2026-05-26: Phase 8 complete. updateApplicationMeta DAL fn + PATCH /api/applications/[id]/metadata route; EditNeededBadge + EditableApplicationHeader (click-to-edit, auto-save, amber badge); InterviewPrepIsland (inline SSE on detail page); 401→/sign-in redirect + save_error Alert in both hooks. Build clean.
 - 2026-05-25: Phase 4 complete. proxy.ts (Next.js 16 rename + /history guard), auth.ts (memory adapter + Google + email/password), dal.ts (verifySession), sign-in page, SSE route guards. AUTH-01 through AUTH-06 satisfied.
 - 2026-05-25: v1.1 roadmap created. 4 phases (4–7), 16/16 v1.1 requirements mapped.
 - 2026-05-25: Plan 03-05 complete. Phase 3 complete. AnalysisPanel gets optional onInterviewPrepReady CTA; page.tsx mounts InterviewPrepPanel behind showInterviewPrep gate. Full end-to-end interview prep flow connected. Build clean.
@@ -165,11 +167,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-05-26T12:41:35.154Z
-**Stopped at:** Phase 8 planned — 4 plans ready for execution
+**Last session:** 2026-05-26T13:30:00.000Z
+**Stopped at:** Phase 8 complete — all history-enhancements plans executed, build clean
 **Resume file:** None
 
-**Next action:** Execute Phase 8 with `/gsd:execute-phase 8`
+**Next action:** Run `/gsd:audit-milestone` to verify milestone completion, or begin v1.2 planning
 
 ---
 
