@@ -69,6 +69,15 @@ export function AnalysisPanel({ resumeText, jdText, onInterviewPrepReady, onSave
 
   return (
     <div className="mt-12">
+      {state.saveError && (
+        <Alert className="mb-6">
+          <AlertTitle>Save failed</AlertTitle>
+          <AlertDescription>
+            Your analysis ran successfully but could not be saved: {state.saveError}
+          </AlertDescription>
+        </Alert>
+      )}
+
       <ScoreCard overallScore={result.overallScore} components={result.components} />
 
       <div className="mt-10">
