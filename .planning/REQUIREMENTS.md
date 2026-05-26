@@ -29,8 +29,8 @@
 
 ### History UI
 
-- [ ] **HIST-01**: User sees a history list showing all saved applications with company name, job title, match score, status tag, and date
-- [ ] **HIST-02**: User can update the status of a saved application (Saved / Applied / Interviewing / Offer / Rejected)
+- [x] **HIST-01**: User sees a history list showing all saved applications with company name, job title, match score, status tag, and date
+- [x] **HIST-02**: User can update the status of a saved application (Saved / Applied / Interviewing / Offer / Rejected)
 - [ ] **HIST-03**: User can open a saved application and see the full read-only analysis (score breakdown, action items, keyword gaps, accepted rewrites)
 - [ ] **HIST-04**: User can see saved interview prep Q+A from the application detail view (when interview prep was run)
 - [ ] **HIST-05**: User can re-run analysis from a saved application — resume text and JD text are pre-populated into the analysis form and a new analysis runs
@@ -79,8 +79,8 @@
 | SAVE-01 | Phase 6 | Complete |
 | SAVE-02 | Phase 6 | Complete |
 | SAVE-03 | Phase 6 | Complete |
-| HIST-01 | Phase 7 | Pending |
-| HIST-02 | Phase 7 | Pending |
+| HIST-01 | Phase 7 | Complete |
+| HIST-02 | Phase 7 | Complete |
 | HIST-03 | Phase 7 | Pending |
 | HIST-04 | Phase 7 | Pending |
 | HIST-05 | Phase 7 | Pending |
