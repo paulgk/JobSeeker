@@ -1,7 +1,7 @@
 # Roadmap: JobSeeker
 
 **Created:** 2026-05-22
-**Last Updated:** 2026-05-25
+**Last Updated:** 2026-05-26
 
 ## Milestones
 
@@ -102,7 +102,11 @@ Plans:
   2. dal.ts functions (verifySession, getApplications, getApplicationById, saveSnapshot, updateStatus) are importable and type-safe against the Drizzle schema
   3. The schema stores resume text and JD text per snapshot row (required for re-run in Phase 7)
   4. The applications table schema supports all five status values (Saved, Applied, Interviewing, Offer, Rejected)
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 05-01-PLAN.md — Schema foundation: db/schema.ts (applications + better-auth tables), db/index.ts (neon-http client), drizzle.config.ts, .env.example placeholders
+- [ ] 05-02-PLAN.md — Provision Neon + run migration: human checkpoint for credentials, drizzle-kit generate + migrate, live-DB verification
+- [ ] 05-03-PLAN.md — Adapter swap + DAL: memoryAdapter → drizzleAdapter in auth.ts, four typed CRUD functions in dal.ts with IDOR guards
 
 ---
 
@@ -143,7 +147,7 @@ Plans:
 | 2 — Match Analysis and Resume Optimisation | v1.0 | 6/6 | ✅ Complete | 2026-05-22 |
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
-| 5 — Database Schema and DAL | v1.1 | 0/? | Not started | — |
+| 5 — Database Schema and DAL | v1.1 | 0/3 | Not started | — |
 | 6 — Save After Analysis | v1.1 | 0/? | Not started | — |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
 
@@ -186,4 +190,4 @@ Plans:
 
 ---
 
-*Created: 2026-05-22 | Last updated: 2026-05-25 — Phase 4 plans added (04-01, 04-02, 04-03)*
+*Created: 2026-05-22 | Last updated: 2026-05-26 — Phase 5 plans added (05-01, 05-02, 05-03)*
