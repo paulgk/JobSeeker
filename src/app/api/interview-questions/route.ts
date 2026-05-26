@@ -30,13 +30,24 @@ async function callWithRetry(
 ): Promise<InterviewPrepResult> {
   const stream = client.messages.stream({
     model: MODEL,
-    max_tokens: attempt === 0 ? 4096 : 6144,
+    max_tokens: attempt === 0 ? 4096 : 8192,
     system: QUESTIONS_SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userPrompt }],
     output_config: { format: zodOutputFormat(InterviewPrepResultSchema) },
   })
   stream.on('text', onText)
-  const final = await stream.finalMessage()
+  let final: Awaited<ReturnType<typeof stream.finalMessage>>
+  try {
+    final = await stream.finalMessage()
+  } catch (err) {
+    // SDK throws a parse error when output is truncated (max_tokens hit mid-JSON).
+    // Retry once with a higher token budget before surfacing the error.
+    if (attempt < 1) {
+      onText('\n[Retrying for better accuracy...]\n')
+      return callWithRetry(userPrompt, onText, attempt + 1)
+    }
+    throw err
+  }
   if (final.stop_reason !== 'end_turn' && attempt < 1) {
     onText('\n[Retrying for better accuracy...]\n')
     return callWithRetry(userPrompt, onText, attempt + 1)
