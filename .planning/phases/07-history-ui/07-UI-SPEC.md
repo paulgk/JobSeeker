@@ -1,7 +1,8 @@
 ---
 phase: 7
 slug: history-ui
-status: draft
+status: approved
+reviewed_at: 2026-05-26
 shadcn_initialized: true
 preset: b2fA
 created: 2026-05-26
