@@ -143,7 +143,7 @@ Plans:
 **Wave 1** *(run in parallel)*
 
 - [ ] 06-01-PLAN.md — DAL + schemas + extraction helper: updateInterviewData() in dal.ts, save_error/applicationId schema extensions, new src/lib/extract-job-meta.ts
-- [ ] 06-02-PLAN.md — Auth guard upgrade: capture userId from verifySession() in analyse and interview-questions routes; confirm critique route guard
+- [x] 06-02-PLAN.md — Auth guard upgrade: capture userId from verifySession() in analyse and interview-questions routes; confirm critique route guard
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -185,7 +185,7 @@ Plans:
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
-| 6 — Save After Analysis | v1.1 | 0/5 | Not started | — |
+| 6 — Save After Analysis | v1.1 | 1/5 | In Progress|  |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
 
 ---
