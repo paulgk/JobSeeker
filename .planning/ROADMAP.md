@@ -70,7 +70,7 @@
 - [ ] **Phase 4: Auth Foundation** — Google OAuth + email/password via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
 - [x] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations (completed 2026-05-26)
 - [x] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction (completed 2026-05-26)
-- [ ] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component
+- [x] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component (completed 2026-05-26)
 
 ---
 
@@ -177,11 +177,11 @@ Plans:
 
 - [x] 07-01-PLAN.md — /history list page + AuthHeader + StatusSelect + shadcn select + DAL newest-first ordering
 - [x] 07-02-PLAN.md — PATCH /api/applications/[id]/status route (enum validation + DAL IDOR guard)
-- [ ] 07-03-PLAN.md — Read-only display components (ScoreCardDisplay, ActionListDisplay, KeywordBadgesDisplay re-exports; RewriteDiffReadOnly and QuestionCardDisplay stripped of streaming/interactive code)
+- [x] 07-03-PLAN.md — Read-only display components (ScoreCardDisplay, ActionListDisplay, KeywordBadgesDisplay re-exports; RewriteDiffReadOnly and QuestionCardDisplay stripped of streaming/interactive code)
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 07-04-PLAN.md — /history/[id] detail page (Tabs + read-only panels), GET /api/applications/[id]/prefill, ResumePanel/JobDescriptionPanel initialValue prop, home page searchParams + use() + prefill fetch for Re-run
+- [x] 07-04-PLAN.md — /history/[id] detail page (Tabs + read-only panels), GET /api/applications/[id]/prefill, ResumePanel/JobDescriptionPanel initialValue prop, home page searchParams + use() + prefill fetch for Re-run
 
 **UI hint**: yes
 
@@ -197,7 +197,7 @@ Plans:
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
 | 6 — Save After Analysis | v1.1 | 5/5 | Complete   | 2026-05-26 |
-| 7 — History UI | v1.1 | 2/4 | In Progress|  |
+| 7 — History UI | v1.1 | 4/4 | Complete   | 2026-05-26 |
 
 ---
 
