@@ -1,18 +1,34 @@
 'use client'
 
-import { useState } from 'react'
+import { use, useState, useEffect } from 'react'
 import { ResumePanel } from '@/components/resume-panel'
 import { JobDescriptionPanel } from '@/components/jd-panel'
 import { AnalysisPanel } from '@/components/analysis-panel'
 import { InterviewPrepPanel } from '@/components/interview-prep-panel'
 import { Button } from '@/components/ui/button'
 
-export default function HomePage() {
+export default function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ applicationId?: string }>
+}) {
+  const { applicationId } = use(searchParams)
   const [resumeText, setResumeText] = useState('')
   const [jdText, setJdText] = useState('')
   const [analysing, setAnalysing] = useState(false)
   const [showInterviewPrep, setShowInterviewPrep] = useState(false)
   const [savedApplicationId, setSavedApplicationId] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!applicationId) return
+    fetch(`/api/applications/${applicationId}/prefill`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then(({ resumeText, jdText }: { resumeText: string; jdText: string }) => {
+        setResumeText(resumeText)
+        setJdText(jdText)
+      })
+      .catch(() => {})
+  }, [applicationId])
 
   const bothReady = resumeText.length > 0 && jdText.length > 0
 
@@ -31,7 +47,7 @@ export default function HomePage() {
           className="rounded-2xl ring-1 ring-border bg-card p-6 flex flex-col"
         >
           <h2 className="text-base font-semibold text-foreground mb-4">Your resume</h2>
-          <ResumePanel onReady={setResumeText} locked={analysing} />
+          <ResumePanel onReady={setResumeText} locked={analysing} initialValue={resumeText} />
         </section>
 
         <section
@@ -39,7 +55,7 @@ export default function HomePage() {
           className="rounded-2xl ring-1 ring-border bg-card p-6 flex flex-col"
         >
           <h2 className="text-base font-semibold text-foreground mb-4">Job description</h2>
-          <JobDescriptionPanel onReady={setJdText} locked={analysing} />
+          <JobDescriptionPanel onReady={setJdText} locked={analysing} initialValue={jdText} />
         </section>
       </div>
 
