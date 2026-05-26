@@ -139,6 +139,11 @@ export function useInterviewPrep() {
       return
     }
 
+    if (res.status === 401) {
+      window.location.href = '/sign-in'
+      return
+    }
+
     if (!res.ok || !res.body) {
       dispatch({ type: 'ERROR', message: 'Failed to connect' })
       return
