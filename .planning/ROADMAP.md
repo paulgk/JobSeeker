@@ -69,7 +69,7 @@
 
 - [ ] **Phase 4: Auth Foundation** — Google OAuth + email/password via better-auth, proxy.ts rename, session cookie, userId in server context, /history route protected
 - [x] **Phase 5: Database Schema and DAL** — Neon Postgres provisioned, Drizzle schema (users/applications/snapshots with JSONB), dal.ts with all CRUD operations (completed 2026-05-26)
-- [ ] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction
+- [x] **Phase 6: Save After Analysis** — Auth guards on route handlers via verifySession(), /api/save endpoint, auto-save trigger after SSE completes, job title/company auto-extraction (completed 2026-05-26)
 - [ ] **Phase 7: History UI** — /history list page (metadata only), /history/[id] detail page (read-only panels), status PATCH endpoint, re-run navigation, AuthHeader component
 
 ---
@@ -147,12 +147,12 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 06-03-PLAN.md — Analyse route save logic: extractJobMeta() + saveApplication() + applicationId in result event + save_error non-fatal path
-- [ ] 06-04-PLAN.md — Client threading: use-analysis captures applicationId, AnalysisPanel onSaved/onAnalysisStart, page.tsx savedApplicationId state, InterviewPrepPanel prop, use-interview-prep fetch body
+- [x] 06-03-PLAN.md — Analyse route save logic: extractJobMeta() + saveApplication() + applicationId in result event + save_error non-fatal path
+- [x] 06-04-PLAN.md — Client threading: use-analysis captures applicationId, AnalysisPanel onSaved/onAnalysisStart, page.tsx savedApplicationId state, InterviewPrepPanel prop, use-interview-prep fetch body
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 06-05-PLAN.md — Interview save: interview-questions route calls updateInterviewData() after result; full TypeScript verification
+- [x] 06-05-PLAN.md — Interview save: interview-questions route calls updateInterviewData() after result; full TypeScript verification
 
 **UI hint**: yes
 
@@ -185,7 +185,7 @@ Plans:
 | 3 — Interview Preparation | v1.0 | 5/5 | ✅ Complete | 2026-05-25 |
 | 4 — Auth Foundation | v1.1 | 3/3 | ✅ Complete | 2026-05-25 |
 | 5 — Database Schema and DAL | v1.1 | 3/3 | Complete   | 2026-05-26 |
-| 6 — Save After Analysis | v1.1 | 2/5 | In Progress|  |
+| 6 — Save After Analysis | v1.1 | 5/5 | Complete   | 2026-05-26 |
 | 7 — History UI | v1.1 | 0/? | Not started | — |
 
 ---
