@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Persistence & History
-status: verifying
-stopped_at: Phase 5 context gathered
-last_updated: "2026-05-26T06:24:40.982Z"
+status: complete
+stopped_at: Phase 7 complete — all 4 plans executed
+last_updated: "2026-05-26T12:00:00.000Z"
 last_activity: 2026-05-26
 progress:
   total_phases: 4
   completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 19
+  completed_plans: 19
   percent: 100
 ---
 
@@ -27,16 +27,13 @@ progress:
 
 **Architecture:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + shadcn/ui. All LLM calls via Route Handlers using Anthropic SDK directly. v1.1 adds better-auth (Google OAuth), Neon Postgres via @neondatabase/serverless, and Drizzle ORM. Deploy to Vercel.
 
-**Current Focus:** Phase 05 — database-schema-and-dal
+**Current Focus:** v1.1 Persistence & History — COMPLETE
 
 ---
 
 ## Current Position
 
-Phase: 05 (database-schema-and-dal) — EXECUTING
-Plan: 3 of 3
-Status: Phase complete — ready for verification
-Last activity: 2026-05-26
+Milestone v1.1 complete. All 4 phases (4–7) and 19 plans executed.
 
 ## Phase Summary
 
@@ -46,9 +43,9 @@ Last activity: 2026-05-26
 | 2 — Match Analysis and Optimisation | Users see match score, action plan, keyword gaps, and rewritten sections | Complete |
 | 3 — Interview Preparation | Users receive role-specific interview questions and prep strategy | Complete |
 | 4 — Auth Foundation | Users can sign in with Google, stay signed in, and /history is protected | Complete |
-| 5 — Database Schema and DAL | Neon Postgres provisioned, Drizzle schema migrated, DAL operational | Not started |
-| 6 — Save After Analysis | Completed analysis is auto-saved; job title/company extracted; interview prep merged | Not started |
-| 7 — History UI | Users can browse, view, update status, and re-run saved applications | Not started |
+| 5 — Database Schema and DAL | Neon Postgres provisioned, Drizzle schema migrated, DAL operational | Complete |
+| 6 — Save After Analysis | Completed analysis is auto-saved; job title/company extracted; interview prep merged | Complete |
+| 7 — History UI | Users can browse, view, update status, and re-run saved applications | Complete |
 
 ---
 
